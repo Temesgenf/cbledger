@@ -1,0 +1,8 @@
+bin/
+out/
+*.o
+*.so
+*.dll
+*.c
+*.c.h
+*.c.l.h
