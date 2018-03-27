@@ -4,9 +4,58 @@
       * LEDGER - APPLY A BATCH OF TRANSACTIONS TO THE ACCOUNT MASTER.
       *
        ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT ACCOUNT-FILE ASSIGN TO WS-ACCT-PATH
+               ORGANIZATION IS LINE SEQUENTIAL
+               FILE STATUS IS WS-ACCT-STATUS.
        DATA DIVISION.
+       FILE SECTION.
+       FD  ACCOUNT-FILE.
+           COPY ACCTREC.
+       WORKING-STORAGE SECTION.
+           COPY ACCTTBL.
+       01  WS-DATA-DIR          PIC X(60).
+       01  WS-ACCT-PATH         PIC X(100).
+       01  WS-ACCT-STATUS       PIC XX.
+       01  WS-SWITCHES.
+           05  WS-ACCT-EOF-SW   PIC X VALUE "N".
+               88  WS-ACCT-EOF  VALUE "Y".
        PROCEDURE DIVISION.
        MAIN-LINE.
-           DISPLAY "LEDGER - BATCH ACCOUNT PROCESSING"
+           PERFORM START-UP
+           PERFORM LOAD-ACCOUNTS
+           DISPLAY "ACCOUNTS LOADED: " AT-COUNT
            STOP RUN.
+
+       START-UP.
+           MOVE 0 TO AT-COUNT
+           PERFORM GET-DIRECTORIES
+           PERFORM BUILD-PATHS.
+
+       GET-DIRECTORIES.
+           MOVE SPACES TO WS-DATA-DIR
+           ACCEPT WS-DATA-DIR FROM ENVIRONMENT "LEDGER_DATA"
+           IF WS-DATA-DIR = SPACES
+               MOVE "data" TO WS-DATA-DIR
+           END-IF.
+
+       BUILD-PATHS.
+           MOVE SPACES TO WS-ACCT-PATH
+           STRING FUNCTION TRIM(WS-DATA-DIR) "/accounts.dat"
+               DELIMITED BY SIZE INTO WS-ACCT-PATH.
+
+       LOAD-ACCOUNTS.
+           OPEN INPUT ACCOUNT-FILE
+           PERFORM UNTIL WS-ACCT-EOF
+               READ ACCOUNT-FILE
+                   AT END
+                       SET WS-ACCT-EOF TO TRUE
+                   NOT AT END
+                       ADD 1 TO AT-COUNT
+                       MOVE ACCT-REC TO AT-ACCT (AT-COUNT)
+               END-READ
+           END-PERFORM
+           CLOSE ACCOUNT-FILE.
+
        END PROGRAM LEDGER.
