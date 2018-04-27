@@ -26,6 +26,7 @@
        01  WS-TRAN-PATH         PIC X(100).
        01  WS-ACCT-STATUS       PIC XX.
        01  WS-TRAN-STATUS       PIC XX.
+       01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
                88  WS-ACCT-EOF  VALUE "Y".
@@ -81,9 +82,21 @@
                    AT END
                        SET WS-TRAN-EOF TO TRUE
                    NOT AT END
-                       ADD 1 TO ST-READ
+                       PERFORM APPLY-TRANSACTION
                END-READ
            END-PERFORM
            CLOSE TRANS-FILE.
+
+       APPLY-TRANSACTION.
+           ADD 1 TO ST-READ
+           PERFORM VARYING WS-IX FROM 1 BY 1
+                   UNTIL WS-IX > AT-COUNT OR AT-ID (WS-IX) = TRAN-ACCT
+               CONTINUE
+           END-PERFORM
+           IF WS-IX <= AT-COUNT
+               IF TRAN-DEPOSIT
+                   ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
+               END-IF
+           END-IF.
 
        END PROGRAM LEDGER.
