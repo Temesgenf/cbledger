@@ -39,6 +39,7 @@
            DISPLAY "ACCOUNTS LOADED: " AT-COUNT
            PERFORM PROCESS-TRANSACTIONS
            DISPLAY "TRANSACTIONS READ: " ST-READ
+           DISPLAY "REJECTED: " ST-REJECTED
            STOP RUN.
 
        START-UP.
@@ -93,10 +94,19 @@
                    UNTIL WS-IX > AT-COUNT OR AT-ID (WS-IX) = TRAN-ACCT
                CONTINUE
            END-PERFORM
-           IF WS-IX <= AT-COUNT
-               IF TRAN-DEPOSIT
-                   ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
-               END-IF
+           IF WS-IX > AT-COUNT
+               ADD 1 TO ST-REJECTED
+           ELSE
+               EVALUATE TRUE
+                   WHEN TRAN-DEPOSIT
+                       ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
+                   WHEN TRAN-WITHDRAW
+                       IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
+                           ADD 1 TO ST-REJECTED
+                       ELSE
+                           SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
+                       END-IF
+               END-EVALUATE
            END-IF.
 
        END PROGRAM LEDGER.
