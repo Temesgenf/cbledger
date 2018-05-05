@@ -12,18 +12,27 @@
            SELECT TRANS-FILE ASSIGN TO WS-TRAN-PATH
                ORGANIZATION IS LINE SEQUENTIAL
                FILE STATUS IS WS-TRAN-STATUS.
+           SELECT REJECT-FILE ASSIGN TO WS-REJ-PATH
+               ORGANIZATION IS LINE SEQUENTIAL.
        DATA DIVISION.
        FILE SECTION.
        FD  ACCOUNT-FILE.
            COPY ACCTREC.
        FD  TRANS-FILE.
            COPY TRANREC.
+       FD  REJECT-FILE.
+       01  REJECT-REC.
+           05  REJ-TRAN         PIC X(62).
+           05  REJ-CODE         PIC XX.
        WORKING-STORAGE SECTION.
            COPY STATS.
            COPY ACCTTBL.
        01  WS-DATA-DIR          PIC X(60).
+       01  WS-OUT-DIR           PIC X(60).
        01  WS-ACCT-PATH         PIC X(100).
        01  WS-TRAN-PATH         PIC X(100).
+       01  WS-REJ-PATH          PIC X(100).
+       01  WS-REJECT-CODE       PIC XX.
        01  WS-ACCT-STATUS       PIC XX.
        01  WS-TRAN-STATUS       PIC XX.
        01  WS-IX                PIC 9(4) COMP.
@@ -39,6 +48,7 @@
            DISPLAY "ACCOUNTS LOADED: " AT-COUNT
            PERFORM PROCESS-TRANSACTIONS
            DISPLAY "TRANSACTIONS READ: " ST-READ
+           DISPLAY "APPLIED: " ST-APPLIED
            DISPLAY "REJECTED: " ST-REJECTED
            STOP RUN.
 
@@ -46,6 +56,7 @@
            MOVE 0 TO AT-COUNT
            INITIALIZE LEDGER-STATS
            PERFORM GET-DIRECTORIES
+           PERFORM GET-OUT-DIR
            PERFORM BUILD-PATHS.
 
        GET-DIRECTORIES.
@@ -55,13 +66,23 @@
                MOVE "data" TO WS-DATA-DIR
            END-IF.
 
+       GET-OUT-DIR.
+           MOVE SPACES TO WS-OUT-DIR
+           ACCEPT WS-OUT-DIR FROM ENVIRONMENT "LEDGER_OUT"
+           IF WS-OUT-DIR = SPACES
+               MOVE "out" TO WS-OUT-DIR
+           END-IF.
+
        BUILD-PATHS.
            MOVE SPACES TO WS-ACCT-PATH
            STRING FUNCTION TRIM(WS-DATA-DIR) "/accounts.dat"
                DELIMITED BY SIZE INTO WS-ACCT-PATH
            MOVE SPACES TO WS-TRAN-PATH
            STRING FUNCTION TRIM(WS-DATA-DIR) "/trans.dat"
-               DELIMITED BY SIZE INTO WS-TRAN-PATH.
+               DELIMITED BY SIZE INTO WS-TRAN-PATH
+           MOVE SPACES TO WS-REJ-PATH
+           STRING FUNCTION TRIM(WS-OUT-DIR) "/rejects.dat"
+               DELIMITED BY SIZE INTO WS-REJ-PATH.
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
@@ -78,6 +99,7 @@
 
        PROCESS-TRANSACTIONS.
            OPEN INPUT TRANS-FILE
+           OPEN OUTPUT REJECT-FILE
            PERFORM UNTIL WS-TRAN-EOF
                READ TRANS-FILE
                    AT END
@@ -86,27 +108,39 @@
                        PERFORM APPLY-TRANSACTION
                END-READ
            END-PERFORM
-           CLOSE TRANS-FILE.
+           CLOSE TRANS-FILE REJECT-FILE.
 
        APPLY-TRANSACTION.
            ADD 1 TO ST-READ
+           MOVE SPACES TO WS-REJECT-CODE
            PERFORM VARYING WS-IX FROM 1 BY 1
                    UNTIL WS-IX > AT-COUNT OR AT-ID (WS-IX) = TRAN-ACCT
                CONTINUE
            END-PERFORM
            IF WS-IX > AT-COUNT
-               ADD 1 TO ST-REJECTED
+               MOVE "01" TO WS-REJECT-CODE
            ELSE
                EVALUATE TRUE
                    WHEN TRAN-DEPOSIT
                        ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
                    WHEN TRAN-WITHDRAW
                        IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
-                           ADD 1 TO ST-REJECTED
+                           MOVE "02" TO WS-REJECT-CODE
                        ELSE
                            SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
                        END-IF
                END-EVALUATE
+           END-IF
+           IF WS-REJECT-CODE = SPACES
+               ADD 1 TO ST-APPLIED
+           ELSE
+               PERFORM REJECT-TRANSACTION
            END-IF.
+
+       REJECT-TRANSACTION.
+           ADD 1 TO ST-REJECTED
+           MOVE TRAN-REC TO REJ-TRAN
+           MOVE WS-REJECT-CODE TO REJ-CODE
+           WRITE REJECT-REC.
 
        END PROGRAM LEDGER.
