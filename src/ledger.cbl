@@ -14,6 +14,8 @@
                FILE STATUS IS WS-TRAN-STATUS.
            SELECT REJECT-FILE ASSIGN TO WS-REJ-PATH
                ORGANIZATION IS LINE SEQUENTIAL.
+           SELECT NEWACCT-FILE ASSIGN TO WS-NEW-PATH
+               ORGANIZATION IS LINE SEQUENTIAL.
        DATA DIVISION.
        FILE SECTION.
        FD  ACCOUNT-FILE.
@@ -24,6 +26,8 @@
        01  REJECT-REC.
            05  REJ-TRAN         PIC X(62).
            05  REJ-CODE         PIC XX.
+       FD  NEWACCT-FILE.
+       01  NEWACCT-REC          PIC X(80).
        WORKING-STORAGE SECTION.
            COPY STATS.
            COPY ACCTTBL.
@@ -32,6 +36,7 @@
        01  WS-ACCT-PATH         PIC X(100).
        01  WS-TRAN-PATH         PIC X(100).
        01  WS-REJ-PATH          PIC X(100).
+       01  WS-NEW-PATH          PIC X(100).
        01  WS-REJECT-CODE       PIC XX.
        01  WS-ACCT-STATUS       PIC XX.
        01  WS-TRAN-STATUS       PIC XX.
@@ -50,6 +55,7 @@
            DISPLAY "TRANSACTIONS READ: " ST-READ
            DISPLAY "APPLIED: " ST-APPLIED
            DISPLAY "REJECTED: " ST-REJECTED
+           PERFORM WRITE-ACCOUNTS
            STOP RUN.
 
        START-UP.
@@ -82,7 +88,10 @@
                DELIMITED BY SIZE INTO WS-TRAN-PATH
            MOVE SPACES TO WS-REJ-PATH
            STRING FUNCTION TRIM(WS-OUT-DIR) "/rejects.dat"
-               DELIMITED BY SIZE INTO WS-REJ-PATH.
+               DELIMITED BY SIZE INTO WS-REJ-PATH
+           MOVE SPACES TO WS-NEW-PATH
+           STRING FUNCTION TRIM(WS-OUT-DIR) "/accounts.new"
+               DELIMITED BY SIZE INTO WS-NEW-PATH.
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
@@ -142,5 +151,12 @@
            MOVE TRAN-REC TO REJ-TRAN
            MOVE WS-REJECT-CODE TO REJ-CODE
            WRITE REJECT-REC.
+
+       WRITE-ACCOUNTS.
+           OPEN OUTPUT NEWACCT-FILE
+           PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
+               WRITE NEWACCT-REC FROM AT-ACCT (WS-IX)
+           END-PERFORM
+           CLOSE NEWACCT-FILE.
 
        END PROGRAM LEDGER.
