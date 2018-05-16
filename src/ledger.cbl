@@ -29,6 +29,7 @@
        FD  NEWACCT-FILE.
        01  NEWACCT-REC          PIC X(80).
        WORKING-STORAGE SECTION.
+           COPY RETCODES.
            COPY STATS.
            COPY ACCTTBL.
        01  WS-DATA-DIR          PIC X(60).
@@ -127,14 +128,14 @@
                CONTINUE
            END-PERFORM
            IF WS-IX > AT-COUNT
-               MOVE "01" TO WS-REJECT-CODE
+               MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
            ELSE
                EVALUATE TRUE
                    WHEN TRAN-DEPOSIT
                        ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
                    WHEN TRAN-WITHDRAW
                        IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
-                           MOVE "02" TO WS-REJECT-CODE
+                           MOVE RC-NO-FUNDS TO WS-REJECT-CODE
                        ELSE
                            SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
                        END-IF
