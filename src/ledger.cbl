@@ -51,12 +51,9 @@
        MAIN-LINE.
            PERFORM START-UP
            PERFORM LOAD-ACCOUNTS
-           DISPLAY "ACCOUNTS LOADED: " AT-COUNT
            PERFORM PROCESS-TRANSACTIONS
-           DISPLAY "TRANSACTIONS READ: " ST-READ
-           DISPLAY "APPLIED: " ST-APPLIED
-           DISPLAY "REJECTED: " ST-REJECTED
            PERFORM WRITE-ACCOUNTS
+           PERFORM FINISH
            STOP RUN.
 
        START-UP.
@@ -164,5 +161,15 @@
                WRITE NEWACCT-REC FROM AT-ACCT (WS-IX)
            END-PERFORM
            CLOSE NEWACCT-FILE.
+
+       FINISH.
+           DISPLAY "LEDGER RUN COMPLETE"
+           DISPLAY "  ACCOUNTS LOADED   " AT-COUNT
+           DISPLAY "  TRANSACTIONS READ " ST-READ
+           DISPLAY "  APPLIED           " ST-APPLIED
+           DISPLAY "  REJECTED          " ST-REJECTED
+           IF ST-REJECTED > 0
+               MOVE 4 TO RETURN-CODE
+           END-IF.
 
        END PROGRAM LEDGER.
