@@ -11,7 +11,7 @@ MAIN := src/ledger.cbl
 SUBS := $(filter-out $(MAIN),$(wildcard src/*.cbl))
 CPYS := $(wildcard copy/*.cpy)
 
-.PHONY: all clean
+.PHONY: all clean test
 
 all: $(BIN)
 
@@ -20,6 +20,9 @@ $(BIN): $(MAIN) $(SUBS) $(CPYS) | bin
 
 bin out:
 	mkdir -p $@
+
+test: $(BIN)
+	sh tests/run_tests.sh
 
 clean:
 	rm -rf bin out
