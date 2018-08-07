@@ -41,6 +41,9 @@
        01  WS-REJECT-CODE       PIC XX.
        01  WS-ACCT-STATUS       PIC XX.
        01  WS-TRAN-STATUS       PIC XX.
+       01  WS-JX                PIC 9(4) COMP.
+       01  WS-FIND-ID           PIC 9(8).
+       01  WS-FOUND-IX          PIC 9(4) COMP.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -125,28 +128,49 @@
        APPLY-TRANSACTION.
            ADD 1 TO ST-READ
            MOVE SPACES TO WS-REJECT-CODE
-           PERFORM VARYING WS-IX FROM 1 BY 1
-                   UNTIL WS-IX > AT-COUNT OR AT-ID (WS-IX) = TRAN-ACCT
-               CONTINUE
-           END-PERFORM
-           IF WS-IX > AT-COUNT
-               MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
-           ELSE
-               EVALUATE TRUE
-                   WHEN TRAN-DEPOSIT
-                       ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
-                   WHEN TRAN-WITHDRAW
-                       IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
-                           MOVE RC-NO-FUNDS TO WS-REJECT-CODE
-                       ELSE
-                           SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
-                       END-IF
-               END-EVALUATE
+           PERFORM VALIDATE-TRANSACTION
+           IF WS-REJECT-CODE = SPACES
+               PERFORM POST-TRANSACTION
            END-IF
            IF WS-REJECT-CODE = SPACES
                ADD 1 TO ST-APPLIED
            ELSE
                PERFORM REJECT-TRANSACTION
+           END-IF.
+
+       FIND-ACCOUNT.
+           MOVE 0 TO WS-FOUND-IX
+           PERFORM VARYING WS-JX FROM 1 BY 1
+                   UNTIL WS-JX > AT-COUNT OR WS-FOUND-IX > 0
+               IF AT-ID (WS-JX) = WS-FIND-ID
+                   MOVE WS-JX TO WS-FOUND-IX
+               END-IF
+           END-PERFORM.
+
+       VALIDATE-TRANSACTION.
+           MOVE TRAN-ACCT TO WS-FIND-ID
+           PERFORM FIND-ACCOUNT
+           MOVE WS-FOUND-IX TO WS-IX
+           EVALUATE TRUE
+               WHEN WS-IX = 0
+                   MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
+               WHEN OTHER
+                   CONTINUE
+           END-EVALUATE.
+
+       POST-TRANSACTION.
+           EVALUATE TRUE
+               WHEN TRAN-DEPOSIT
+                   ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
+               WHEN TRAN-WITHDRAW
+                   PERFORM DEBIT-ACCOUNT
+           END-EVALUATE.
+
+       DEBIT-ACCOUNT.
+           IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
+               MOVE RC-NO-FUNDS TO WS-REJECT-CODE
+           ELSE
+               SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
            END-IF.
 
        REJECT-TRANSACTION.
