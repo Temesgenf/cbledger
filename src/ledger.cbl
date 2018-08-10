@@ -44,6 +44,7 @@
        01  WS-JX                PIC 9(4) COMP.
        01  WS-FIND-ID           PIC 9(8).
        01  WS-FOUND-IX          PIC 9(4) COMP.
+       01  WS-TX                PIC 9(4) COMP.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -164,6 +165,8 @@
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
                WHEN TRAN-WITHDRAW
                    PERFORM DEBIT-ACCOUNT
+               WHEN TRAN-TRANSFER
+                   PERFORM TRANSFER-FUNDS
            END-EVALUATE.
 
        DEBIT-ACCOUNT.
@@ -194,6 +197,19 @@
            DISPLAY "  REJECTED          " ST-REJECTED
            IF ST-REJECTED > 0
                MOVE 4 TO RETURN-CODE
+           END-IF.
+
+       TRANSFER-FUNDS.
+           PERFORM DEBIT-ACCOUNT
+           IF WS-REJECT-CODE = SPACES
+               MOVE TRAN-TARGET TO WS-FIND-ID
+               PERFORM FIND-ACCOUNT
+               MOVE WS-FOUND-IX TO WS-TX
+               IF WS-TX = 0
+                   MOVE RC-NO-TARGET TO WS-REJECT-CODE
+               ELSE
+                   ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
+               END-IF
            END-IF.
 
        END PROGRAM LEDGER.

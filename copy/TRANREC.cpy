@@ -6,6 +6,7 @@
            05  TRAN-TYPE        PIC X.
                88  TRAN-DEPOSIT    VALUE "D".
                88  TRAN-WITHDRAW   VALUE "W".
+               88  TRAN-TRANSFER   VALUE "T".
            05  TRAN-ACCT        PIC 9(8).
            05  TRAN-TARGET      PIC 9(8).
            05  TRAN-AMOUNT      PIC 9(9)V99.
