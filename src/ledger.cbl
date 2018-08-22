@@ -200,14 +200,14 @@
            END-IF.
 
        TRANSFER-FUNDS.
-           PERFORM DEBIT-ACCOUNT
-           IF WS-REJECT-CODE = SPACES
-               MOVE TRAN-TARGET TO WS-FIND-ID
-               PERFORM FIND-ACCOUNT
-               MOVE WS-FOUND-IX TO WS-TX
-               IF WS-TX = 0
-                   MOVE RC-NO-TARGET TO WS-REJECT-CODE
-               ELSE
+           MOVE TRAN-TARGET TO WS-FIND-ID
+           PERFORM FIND-ACCOUNT
+           MOVE WS-FOUND-IX TO WS-TX
+           IF WS-TX = 0
+               MOVE RC-NO-TARGET TO WS-REJECT-CODE
+           ELSE
+               PERFORM DEBIT-ACCOUNT
+               IF WS-REJECT-CODE = SPACES
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
                END-IF
            END-IF.
