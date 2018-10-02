@@ -155,6 +155,8 @@
            EVALUATE TRUE
                WHEN WS-IX = 0
                    MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
+               WHEN TRAN-TRANSFER AND TRAN-TARGET = TRAN-ACCT
+                   MOVE RC-SAME-ACCOUNT TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.

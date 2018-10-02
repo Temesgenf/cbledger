@@ -3,3 +3,4 @@
            05  RC-NO-ACCOUNT    PIC XX VALUE "01".
            05  RC-NO-FUNDS      PIC XX VALUE "02".
            05  RC-NO-TARGET     PIC XX VALUE "09".
+           05  RC-SAME-ACCOUNT  PIC XX VALUE "08".
