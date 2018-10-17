@@ -4,3 +4,4 @@
            05  RC-NO-FUNDS      PIC XX VALUE "02".
            05  RC-NO-TARGET     PIC XX VALUE "09".
            05  RC-SAME-ACCOUNT  PIC XX VALUE "08".
+           05  RC-BAD-DATE      PIC XX VALUE "06".

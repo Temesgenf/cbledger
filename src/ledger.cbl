@@ -45,6 +45,8 @@
        01  WS-FIND-ID           PIC 9(8).
        01  WS-FOUND-IX          PIC 9(4) COMP.
        01  WS-TX                PIC 9(4) COMP.
+       01  WS-DATE-OK           PIC X.
+           88  DATE-IS-VALID    VALUE "Y".
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -152,11 +154,14 @@
            MOVE TRAN-ACCT TO WS-FIND-ID
            PERFORM FIND-ACCOUNT
            MOVE WS-FOUND-IX TO WS-IX
+           CALL "DATEUTIL" USING TRAN-DATE WS-DATE-OK
            EVALUATE TRUE
                WHEN WS-IX = 0
                    MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
                WHEN TRAN-TRANSFER AND TRAN-TARGET = TRAN-ACCT
                    MOVE RC-SAME-ACCOUNT TO WS-REJECT-CODE
+               WHEN NOT DATE-IS-VALID
+                   MOVE RC-BAD-DATE TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
