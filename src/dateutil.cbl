@@ -22,6 +22,8 @@
            IF LK-YEAR >= 1900 AND LK-MONTH >= 1 AND LK-MONTH <= 12
                MOVE WS-DAYS-IN-MONTH (LK-MONTH) TO WS-MAX-DAY
                IF LK-MONTH = 2 AND FUNCTION MOD (LK-YEAR, 4) = 0
+                  AND (FUNCTION MOD (LK-YEAR, 100) NOT = 0
+                       OR FUNCTION MOD (LK-YEAR, 400) = 0)
                    MOVE 29 TO WS-MAX-DAY
                END-IF
                IF LK-DAY >= 1 AND LK-DAY <= WS-MAX-DAY
