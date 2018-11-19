@@ -1,0 +1,36 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. AUDITLOG.
+      *
+      * AUDITLOG - WRITES THE AUDIT LOG, ONE LINE PER TRANSACTION.
+      *   CALL "AUDITLOG" USING "O" PATH   OPEN THE LOG
+      *   CALL "AUDITLOG" USING "W" LINE   WRITE A LINE
+      *   CALL "AUDITLOG" USING "C" LINE   CLOSE THE LOG
+      *
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT AUDIT-FILE ASSIGN TO WS-PATH
+               ORGANIZATION IS LINE SEQUENTIAL.
+       DATA DIVISION.
+       FILE SECTION.
+       FD  AUDIT-FILE.
+       01  AUDIT-REC            PIC X(100).
+       WORKING-STORAGE SECTION.
+       01  WS-PATH              PIC X(100).
+       LINKAGE SECTION.
+       01  LK-ACTION            PIC X.
+       01  LK-TEXT              PIC X(100).
+       PROCEDURE DIVISION USING LK-ACTION LK-TEXT.
+       MAIN-LINE.
+           EVALUATE LK-ACTION
+               WHEN "O"
+                   MOVE LK-TEXT TO WS-PATH
+                   OPEN OUTPUT AUDIT-FILE
+               WHEN "W"
+                   WRITE AUDIT-REC FROM LK-TEXT
+               WHEN "C"
+                   CLOSE AUDIT-FILE
+           END-EVALUATE
+           GOBACK.
+
+       END PROGRAM AUDITLOG.
