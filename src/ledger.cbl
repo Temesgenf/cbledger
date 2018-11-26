@@ -47,6 +47,10 @@
        01  WS-TX                PIC 9(4) COMP.
        01  WS-DATE-OK           PIC X.
            88  DATE-IS-VALID    VALUE "Y".
+       01  WS-AUDIT-PATH        PIC X(100).
+       01  WS-AUDIT-LINE        PIC X(100).
+       01  WS-AUDIT-RESULT      PIC X(10).
+       01  WS-AMT-EDIT          PIC Z(8)9.99.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -67,7 +71,8 @@
            INITIALIZE LEDGER-STATS
            PERFORM GET-DIRECTORIES
            PERFORM GET-OUT-DIR
-           PERFORM BUILD-PATHS.
+           PERFORM BUILD-PATHS
+           CALL "AUDITLOG" USING "O" WS-AUDIT-PATH.
 
        GET-DIRECTORIES.
            MOVE SPACES TO WS-DATA-DIR
@@ -95,7 +100,10 @@
                DELIMITED BY SIZE INTO WS-REJ-PATH
            MOVE SPACES TO WS-NEW-PATH
            STRING FUNCTION TRIM(WS-OUT-DIR) "/accounts.new"
-               DELIMITED BY SIZE INTO WS-NEW-PATH.
+               DELIMITED BY SIZE INTO WS-NEW-PATH
+           MOVE SPACES TO WS-AUDIT-PATH
+           STRING FUNCTION TRIM(WS-OUT-DIR) "/audit.log"
+               DELIMITED BY SIZE INTO WS-AUDIT-PATH.
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
@@ -137,6 +145,8 @@
            END-IF
            IF WS-REJECT-CODE = SPACES
                ADD 1 TO ST-APPLIED
+               MOVE "OK" TO WS-AUDIT-RESULT
+               PERFORM WRITE-AUDIT
            ELSE
                PERFORM REJECT-TRANSACTION
            END-IF.
@@ -197,6 +207,7 @@
            CLOSE NEWACCT-FILE.
 
        FINISH.
+           CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
            DISPLAY "LEDGER RUN COMPLETE"
            DISPLAY "  ACCOUNTS LOADED   " AT-COUNT
            DISPLAY "  TRANSACTIONS READ " ST-READ
@@ -218,5 +229,13 @@
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
                END-IF
            END-IF.
+
+       WRITE-AUDIT.
+           MOVE TRAN-AMOUNT TO WS-AMT-EDIT
+           MOVE SPACES TO WS-AUDIT-LINE
+           STRING TRAN-DATE " " TRAN-SEQ " " TRAN-TYPE " "
+               TRAN-ACCT " " WS-AMT-EDIT " " WS-AUDIT-RESULT
+               DELIMITED BY SIZE INTO WS-AUDIT-LINE
+           CALL "AUDITLOG" USING "W" WS-AUDIT-LINE.
 
        END PROGRAM LEDGER.
