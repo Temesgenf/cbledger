@@ -51,6 +51,7 @@
        01  WS-AUDIT-LINE        PIC X(100).
        01  WS-AUDIT-RESULT      PIC X(10).
        01  WS-AMT-EDIT          PIC Z(8)9.99.
+       01  WS-RPT-PATH          PIC X(100).
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -103,7 +104,10 @@
                DELIMITED BY SIZE INTO WS-NEW-PATH
            MOVE SPACES TO WS-AUDIT-PATH
            STRING FUNCTION TRIM(WS-OUT-DIR) "/audit.log"
-               DELIMITED BY SIZE INTO WS-AUDIT-PATH.
+               DELIMITED BY SIZE INTO WS-AUDIT-PATH
+           MOVE SPACES TO WS-RPT-PATH
+           STRING FUNCTION TRIM(WS-OUT-DIR) "/ledger.rpt"
+               DELIMITED BY SIZE INTO WS-RPT-PATH.
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
@@ -212,6 +216,7 @@
 
        FINISH.
            CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
+           CALL "RPTWRT" USING ACCT-TABLE LEDGER-STATS WS-RPT-PATH
            DISPLAY "LEDGER RUN COMPLETE"
            DISPLAY "  ACCOUNTS LOADED   " AT-COUNT
            DISPLAY "  TRANSACTIONS READ " ST-READ
