@@ -15,6 +15,8 @@
        WORKING-STORAGE SECTION.
        01  WS-PATH              PIC X(100).
        01  WS-IX                PIC 9(4) COMP.
+       01  WS-TOT-CHECKING      PIC 9(11)V99 VALUE 0.
+       01  WS-TOT-SAVINGS       PIC 9(11)V99 VALUE 0.
        01  HEADING-1.
            05  FILLER           PIC X(54) VALUE "CBLEDGER ACCOUNT LIST".
        01  HEADING-2.
@@ -30,6 +32,9 @@
            05  FILLER           PIC XX VALUE SPACES.
            05  DL-TYPE          PIC X(8).
            05  DL-BALANCE       PIC ZZZ,ZZZ,ZZ9.99.
+       01  TOTAL-LINE.
+           05  TL-LABEL         PIC X(40).
+           05  TL-AMOUNT        PIC ZZZ,ZZZ,ZZ9.99.
        LINKAGE SECTION.
            COPY ACCTTBL.
            COPY STATS.
@@ -42,6 +47,7 @@
            PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
                PERFORM PRINT-DETAIL
            END-PERFORM
+           PERFORM PRINT-TOTALS
            CLOSE REPORT-FILE
            GOBACK.
 
@@ -55,10 +61,21 @@
            MOVE AT-NAME (WS-IX) TO DL-NAME
            IF AT-TYPE (WS-IX) = "C"
                MOVE "CHECKING" TO DL-TYPE
+               ADD AT-BALANCE (WS-IX) TO WS-TOT-CHECKING
            ELSE
                MOVE "SAVINGS" TO DL-TYPE
+               ADD AT-BALANCE (WS-IX) TO WS-TOT-SAVINGS
            END-IF
            MOVE AT-BALANCE (WS-IX) TO DL-BALANCE
            WRITE REPORT-REC FROM DETAIL-LINE.
+
+       PRINT-TOTALS.
+           WRITE REPORT-REC FROM RULE-LINE
+           MOVE "TOTAL CHECKING" TO TL-LABEL
+           MOVE WS-TOT-CHECKING TO TL-AMOUNT
+           WRITE REPORT-REC FROM TOTAL-LINE
+           MOVE "TOTAL SAVINGS" TO TL-LABEL
+           MOVE WS-TOT-SAVINGS TO TL-AMOUNT
+           WRITE REPORT-REC FROM TOTAL-LINE.
 
        END PROGRAM RPTWRT.
