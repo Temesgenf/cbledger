@@ -17,8 +17,13 @@
        01  WS-IX                PIC 9(4) COMP.
        01  WS-TOT-CHECKING      PIC 9(11)V99 VALUE 0.
        01  WS-TOT-SAVINGS       PIC 9(11)V99 VALUE 0.
+       01  WS-LINE-COUNT        PIC 9(3) COMP VALUE 0.
+       01  WS-PAGE-NO           PIC 9(3) COMP VALUE 0.
+       01  WS-PAGE-SIZE         PIC 9(3) COMP VALUE 10.
        01  HEADING-1.
-           05  FILLER           PIC X(54) VALUE "CBLEDGER ACCOUNT LIST".
+           05  FILLER           PIC X(46) VALUE "CBLEDGER ACCOUNT LIST".
+           05  FILLER           PIC X(5)  VALUE "PAGE ".
+           05  HD-PAGE          PIC ZZ9.
        01  HEADING-2.
            05  FILLER           PIC X(10) VALUE "ACCT ID".
            05  FILLER           PIC X(22) VALUE "NAME".
@@ -43,7 +48,6 @@
        MAIN-LINE.
            MOVE LK-PATH TO WS-PATH
            OPEN OUTPUT REPORT-FILE
-           PERFORM PRINT-HEADINGS
            PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
                PERFORM PRINT-DETAIL
            END-PERFORM
@@ -52,11 +56,21 @@
            GOBACK.
 
        PRINT-HEADINGS.
+           ADD 1 TO WS-PAGE-NO
+           MOVE WS-PAGE-NO TO HD-PAGE
+           IF WS-PAGE-NO > 1
+               MOVE SPACES TO REPORT-REC
+               WRITE REPORT-REC
+           END-IF
            WRITE REPORT-REC FROM HEADING-1
            WRITE REPORT-REC FROM HEADING-2
-           WRITE REPORT-REC FROM RULE-LINE.
+           WRITE REPORT-REC FROM RULE-LINE
+           MOVE 0 TO WS-LINE-COUNT.
 
        PRINT-DETAIL.
+           IF WS-LINE-COUNT = 0 OR WS-LINE-COUNT >= WS-PAGE-SIZE
+               PERFORM PRINT-HEADINGS
+           END-IF
            MOVE AT-ID (WS-IX) TO DL-ID
            MOVE AT-NAME (WS-IX) TO DL-NAME
            IF AT-TYPE (WS-IX) = "C"
@@ -67,7 +81,8 @@
                ADD AT-BALANCE (WS-IX) TO WS-TOT-SAVINGS
            END-IF
            MOVE AT-BALANCE (WS-IX) TO DL-BALANCE
-           WRITE REPORT-REC FROM DETAIL-LINE.
+           WRITE REPORT-REC FROM DETAIL-LINE
+           ADD 1 TO WS-LINE-COUNT.
 
        PRINT-TOTALS.
            WRITE REPORT-REC FROM RULE-LINE
