@@ -20,3 +20,7 @@ ACCT ID   NAME                  TYPE           BALANCE
 ------------------------------------------------------
 TOTAL CHECKING                               23,810.60
 TOTAL SAVINGS                                72,759.99
+
+TRANSACTIONS READ                            15
+TRANSACTIONS APPLIED                          8
+TRANSACTIONS REJECTED                         7
