@@ -184,7 +184,7 @@
            EVALUATE TRUE
                WHEN TRAN-DEPOSIT
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
-               WHEN TRAN-WITHDRAW
+               WHEN TRAN-WITHDRAW OR TRAN-FEE
                    PERFORM DEBIT-ACCOUNT
                WHEN TRAN-TRANSFER
                    PERFORM TRANSFER-FUNDS

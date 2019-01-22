@@ -1,7 +1,7 @@
 CBLEDGER ACCOUNT LIST                         PAGE   1
 ACCT ID   NAME                  TYPE           BALANCE
 ------------------------------------------------------
-10000001  ALICE ADEBAYO         CHECKING      2,450.00
+10000001  ALICE ADEBAYO         CHECKING      2,447.50
 10000002  BEKELE TESFAYE        SAVINGS      16,000.00
 10000003  CHEN WEI              CHECKING        820.50
 10000004  DAWIT HAILE           SAVINGS         700.00
@@ -18,9 +18,9 @@ ACCT ID   NAME                  TYPE           BALANCE
 10000011  KAREN LINDQVIST       SAVINGS       9,999.99
 10000012  LIAM O'BRIEN          CHECKING          0.00
 ------------------------------------------------------
-TOTAL CHECKING                               23,810.60
+TOTAL CHECKING                               23,808.10
 TOTAL SAVINGS                                72,759.99
 
-TRANSACTIONS READ                            15
-TRANSACTIONS APPLIED                          8
-TRANSACTIONS REJECTED                         7
+TRANSACTIONS READ                            17
+TRANSACTIONS APPLIED                          9
+TRANSACTIONS REJECTED                         8
