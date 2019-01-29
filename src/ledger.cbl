@@ -176,6 +176,10 @@
                    MOVE RC-SAME-ACCOUNT TO WS-REJECT-CODE
                WHEN NOT DATE-IS-VALID
                    MOVE RC-BAD-DATE TO WS-REJECT-CODE
+               WHEN NOT TRAN-KNOWN-TYPE
+                   MOVE RC-BAD-TYPE TO WS-REJECT-CODE
+               WHEN TRAN-AMOUNT = ZERO
+                   MOVE RC-ZERO-AMOUNT TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
