@@ -26,7 +26,8 @@ for dir in tests/cases/*/; do
     mkdir -p "$out"
     args=
     if [ -f "$dir/args" ]; then args=$(cat "$dir/args"); fi
-    LEDGER_DATA="$dir" LEDGER_OUT="$out" "./$BIN" $args > "$out/console.txt" 2>&1
+    LEDGER_DATA="$dir" LEDGER_OUT="$out" LEDGER_RUN_DATE=20180831 \
+        "./$BIN" $args > "$out/console.txt" 2>&1
     echo $? > "$out/rc.txt"
     if [ "$1" = "--update" ]; then
         rm -rf "$dir/expected"

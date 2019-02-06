@@ -1,4 +1,4 @@
-CBLEDGER ACCOUNT LIST                         PAGE   1
+CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   1
 ACCT ID   NAME                  TYPE           BALANCE
 ------------------------------------------------------
 10000001  ALICE ADEBAYO         CHECKING      2,447.50
@@ -12,7 +12,7 @@ ACCT ID   NAME                  TYPE           BALANCE
 10000009  IBRAHIM YUSUF         CHECKING        640.00
 10000010  JOHNSON, MARK         CHECKING      5,400.10
 
-CBLEDGER ACCOUNT LIST                         PAGE   2
+CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   2
 ACCT ID   NAME                  TYPE           BALANCE
 ------------------------------------------------------
 10000011  KAREN LINDQVIST       SAVINGS       9,999.99

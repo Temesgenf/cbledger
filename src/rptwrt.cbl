@@ -21,9 +21,11 @@
        01  WS-PAGE-NO           PIC 9(3) COMP VALUE 0.
        01  WS-PAGE-SIZE         PIC 9(3) COMP VALUE 10.
        01  HEADING-1.
-           05  FILLER           PIC X(46) VALUE "CBLEDGER ACCOUNT LIST".
-           05  FILLER           PIC X(5)  VALUE "PAGE ".
-           05  HD-PAGE          PIC ZZ9.
+           05  FILLER           PIC X(26) VALUE "CBLEDGER ACCOUNT LIST".
+           05  FILLER           PIC X(9)  VALUE "RUN DATE ".
+           05  HD-DATE          PIC X(10).
+           05  FILLER           PIC X(5)  VALUE " PAGE".
+           05  HD-PAGE          PIC ZZZ9.
        01  HEADING-2.
            05  FILLER           PIC X(10) VALUE "ACCT ID".
            05  FILLER           PIC X(22) VALUE "NAME".
@@ -47,9 +49,13 @@
            COPY ACCTTBL.
            COPY STATS.
        01  LK-PATH              PIC X(100).
-       PROCEDURE DIVISION USING ACCT-TABLE LEDGER-STATS LK-PATH.
+       01  LK-RUN-DATE          PIC X(8).
+       PROCEDURE DIVISION USING ACCT-TABLE LEDGER-STATS LK-PATH
+           LK-RUN-DATE.
        MAIN-LINE.
            MOVE LK-PATH TO WS-PATH
+           STRING LK-RUN-DATE (1:4) "-" LK-RUN-DATE (5:2) "-"
+               LK-RUN-DATE (7:2) DELIMITED BY SIZE INTO HD-DATE
            OPEN OUTPUT REPORT-FILE
            PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
                PERFORM PRINT-DETAIL

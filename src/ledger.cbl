@@ -52,6 +52,7 @@
        01  WS-AUDIT-RESULT      PIC X(10).
        01  WS-AMT-EDIT          PIC Z(8)9.99.
        01  WS-RPT-PATH          PIC X(100).
+       01  WS-RUN-DATE          PIC X(8).
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -72,6 +73,7 @@
            INITIALIZE LEDGER-STATS
            PERFORM GET-DIRECTORIES
            PERFORM GET-OUT-DIR
+           PERFORM GET-RUN-DATE
            PERFORM BUILD-PATHS
            CALL "AUDITLOG" USING "O" WS-AUDIT-PATH.
 
@@ -87,6 +89,13 @@
            ACCEPT WS-OUT-DIR FROM ENVIRONMENT "LEDGER_OUT"
            IF WS-OUT-DIR = SPACES
                MOVE "out" TO WS-OUT-DIR
+           END-IF.
+
+       GET-RUN-DATE.
+           MOVE SPACES TO WS-RUN-DATE
+           ACCEPT WS-RUN-DATE FROM ENVIRONMENT "LEDGER_RUN_DATE"
+           IF WS-RUN-DATE = SPACES
+               MOVE FUNCTION CURRENT-DATE (1:8) TO WS-RUN-DATE
            END-IF.
 
        BUILD-PATHS.
@@ -221,6 +230,7 @@
        FINISH.
            CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
            CALL "RPTWRT" USING ACCT-TABLE LEDGER-STATS WS-RPT-PATH
+               WS-RUN-DATE
            DISPLAY "LEDGER RUN COMPLETE"
            DISPLAY "  ACCOUNTS LOADED   " AT-COUNT
            DISPLAY "  TRANSACTIONS READ " ST-READ
