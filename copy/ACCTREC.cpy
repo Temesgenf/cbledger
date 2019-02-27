@@ -7,5 +7,9 @@
            05  ACCT-TYPE        PIC X.
                88  ACCT-CHECKING VALUE "C".
                88  ACCT-SAVINGS  VALUE "S".
+           05  ACCT-STATUS      PIC X.
+               88  ACCT-ACTIVE   VALUE "A".
+               88  ACCT-FROZEN   VALUE "F".
+               88  ACCT-CLOSED   VALUE "C".
            05  ACCT-BALANCE     PIC 9(9)V99.
            05  ACCT-OPEN-DATE   PIC 9(8).

@@ -7,5 +7,9 @@
                    15  AT-ID            PIC 9(8).
                    15  AT-NAME          PIC X(20).
                    15  AT-TYPE          PIC X.
+                   15  AT-STATUS        PIC X.
+                       88  AT-ACTIVE    VALUE "A".
+                       88  AT-FROZEN    VALUE "F".
+                       88  AT-CLOSED    VALUE "C".
                    15  AT-BALANCE       PIC 9(9)V99.
                    15  AT-OPEN-DATE     PIC 9(8).
