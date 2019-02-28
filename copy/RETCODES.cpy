@@ -7,3 +7,4 @@
            05  RC-BAD-DATE      PIC XX VALUE "06".
            05  RC-BAD-TYPE      PIC XX VALUE "05".
            05  RC-ZERO-AMOUNT   PIC XX VALUE "07".
+           05  RC-FROZEN        PIC XX VALUE "03".

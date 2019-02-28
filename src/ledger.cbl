@@ -189,6 +189,8 @@
                    MOVE RC-BAD-TYPE TO WS-REJECT-CODE
                WHEN TRAN-AMOUNT = ZERO
                    MOVE RC-ZERO-AMOUNT TO WS-REJECT-CODE
+               WHEN AT-FROZEN (WS-IX)
+                   MOVE RC-FROZEN TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
