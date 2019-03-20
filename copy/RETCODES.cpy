@@ -8,3 +8,4 @@
            05  RC-BAD-TYPE      PIC XX VALUE "05".
            05  RC-ZERO-AMOUNT   PIC XX VALUE "07".
            05  RC-FROZEN        PIC XX VALUE "03".
+           05  RC-CLOSED        PIC XX VALUE "04".

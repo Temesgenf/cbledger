@@ -191,6 +191,8 @@
                    MOVE RC-ZERO-AMOUNT TO WS-REJECT-CODE
                WHEN AT-FROZEN (WS-IX)
                    MOVE RC-FROZEN TO WS-REJECT-CODE
+               WHEN AT-CLOSED (WS-IX)
+                   MOVE RC-CLOSED TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
