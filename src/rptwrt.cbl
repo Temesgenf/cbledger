@@ -29,18 +29,21 @@
        01  HEADING-2.
            05  FILLER           PIC X(10) VALUE "ACCT ID".
            05  FILLER           PIC X(22) VALUE "NAME".
-           05  FILLER           PIC X(8)  VALUE "TYPE".
+           05  FILLER           PIC X(9)  VALUE "TYPE".
+           05  FILLER           PIC X(8)  VALUE "STATUS".
            05  FILLER           PIC X(14) VALUE "       BALANCE".
-       01  RULE-LINE            PIC X(54) VALUE ALL "-".
+       01  RULE-LINE            PIC X(63) VALUE ALL "-".
        01  DETAIL-LINE.
            05  DL-ID            PIC 9(8).
            05  FILLER           PIC XX VALUE SPACES.
            05  DL-NAME          PIC X(20).
            05  FILLER           PIC XX VALUE SPACES.
            05  DL-TYPE          PIC X(8).
+           05  FILLER           PIC X VALUE SPACE.
+           05  DL-STATUS        PIC X(8).
            05  DL-BALANCE       PIC ZZZ,ZZZ,ZZ9.99.
        01  TOTAL-LINE.
-           05  TL-LABEL         PIC X(40).
+           05  TL-LABEL         PIC X(49).
            05  TL-AMOUNT        PIC ZZZ,ZZZ,ZZ9.99.
        01  STAT-LINE.
            05  SL-LABEL         PIC X(40).
@@ -90,6 +93,14 @@
                MOVE "SAVINGS" TO DL-TYPE
                ADD AT-BALANCE (WS-IX) TO WS-TOT-SAVINGS
            END-IF
+           EVALUATE TRUE
+               WHEN AT-FROZEN (WS-IX)
+                   MOVE "FROZEN" TO DL-STATUS
+               WHEN AT-CLOSED (WS-IX)
+                   MOVE "CLOSED" TO DL-STATUS
+               WHEN OTHER
+                   MOVE "ACTIVE" TO DL-STATUS
+           END-EVALUATE
            MOVE AT-BALANCE (WS-IX) TO DL-BALANCE
            WRITE REPORT-REC FROM DETAIL-LINE
            ADD 1 TO WS-LINE-COUNT.

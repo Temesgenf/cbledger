@@ -1,25 +1,25 @@
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   1
-ACCT ID   NAME                  TYPE           BALANCE
-------------------------------------------------------
-10000001  ALICE ADEBAYO         CHECKING      2,447.50
-10000002  BEKELE TESFAYE        SAVINGS      16,000.00
-10000003  CHEN WEI              CHECKING        820.50
-10000004  DAWIT HAILE           SAVINGS         700.00
-10000005  ELENA MORALES         CHECKING     14,500.00
-10000006  FATIMA AL-SAYED       SAVINGS      45,000.00
-10000007  GEORGE OKAFOR         CHECKING          0.00
-10000008  HANNAH SCHMIDT        SAVINGS       1,060.00
-10000009  IBRAHIM YUSUF         CHECKING        640.00
-10000010  JOHNSON, MARK         CHECKING      5,400.10
+ACCT ID   NAME                  TYPE     STATUS         BALANCE
+---------------------------------------------------------------
+10000001  ALICE ADEBAYO         CHECKING ACTIVE        2,447.50
+10000002  BEKELE TESFAYE        SAVINGS  ACTIVE       16,000.00
+10000003  CHEN WEI              CHECKING ACTIVE          820.50
+10000004  DAWIT HAILE           SAVINGS  ACTIVE          700.00
+10000005  ELENA MORALES         CHECKING ACTIVE       14,500.00
+10000006  FATIMA AL-SAYED       SAVINGS  ACTIVE       45,000.00
+10000007  GEORGE OKAFOR         CHECKING ACTIVE            0.00
+10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE        1,060.00
+10000009  IBRAHIM YUSUF         CHECKING FROZEN          640.00
+10000010  JOHNSON, MARK         CHECKING ACTIVE        5,400.10
 
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   2
-ACCT ID   NAME                  TYPE           BALANCE
-------------------------------------------------------
-10000011  KAREN LINDQVIST       SAVINGS       9,999.99
-10000012  LIAM O'BRIEN          CHECKING          0.00
-------------------------------------------------------
-TOTAL CHECKING                               23,808.10
-TOTAL SAVINGS                                72,759.99
+ACCT ID   NAME                  TYPE     STATUS         BALANCE
+---------------------------------------------------------------
+10000011  KAREN LINDQVIST       SAVINGS  ACTIVE        9,999.99
+10000012  LIAM O'BRIEN          CHECKING CLOSED            0.00
+---------------------------------------------------------------
+TOTAL CHECKING                                        23,808.10
+TOTAL SAVINGS                                         72,759.99
 
 TRANSACTIONS READ                            21
 TRANSACTIONS APPLIED                          9
