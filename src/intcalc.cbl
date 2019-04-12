@@ -1,0 +1,26 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. INTCALC.
+      *
+      * INTCALC - ONE MONTH'S INTEREST FOR A SAVINGS BALANCE.
+      * ANNUAL RATE: UNDER 1000 0.50%, UNDER 10000 1.00%, ELSE 1.50%.
+      *
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01  WS-RATE              PIC 9V9999.
+       LINKAGE SECTION.
+       01  LK-BALANCE           PIC 9(9)V99.
+       01  LK-INTEREST          PIC 9(9)V99.
+       PROCEDURE DIVISION USING LK-BALANCE LK-INTEREST.
+       MAIN-LINE.
+           EVALUATE TRUE
+               WHEN LK-BALANCE < 1000
+                   MOVE 0.0050 TO WS-RATE
+               WHEN LK-BALANCE < 10000
+                   MOVE 0.0100 TO WS-RATE
+               WHEN OTHER
+                   MOVE 0.0150 TO WS-RATE
+           END-EVALUATE
+           COMPUTE LK-INTEREST = LK-BALANCE * WS-RATE / 12
+           GOBACK.
+
+       END PROGRAM INTCALC.
