@@ -53,6 +53,10 @@
        01  WS-AMT-EDIT          PIC Z(8)9.99.
        01  WS-RPT-PATH          PIC X(100).
        01  WS-RUN-DATE          PIC X(8).
+       01  WS-CMDLINE           PIC X(40).
+       01  WS-MODE-SW           PIC X VALUE "T".
+           88  RUN-INTEREST     VALUE "I".
+       01  WS-INTEREST          PIC 9(9)V99.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -63,7 +67,11 @@
        MAIN-LINE.
            PERFORM START-UP
            PERFORM LOAD-ACCOUNTS
-           PERFORM PROCESS-TRANSACTIONS
+           IF RUN-INTEREST
+               PERFORM POST-INTEREST
+           ELSE
+               PERFORM PROCESS-TRANSACTIONS
+           END-IF
            PERFORM WRITE-ACCOUNTS
            PERFORM FINISH
            STOP RUN.
@@ -74,6 +82,7 @@
            PERFORM GET-DIRECTORIES
            PERFORM GET-OUT-DIR
            PERFORM GET-RUN-DATE
+           PERFORM GET-MODE
            PERFORM BUILD-PATHS
            CALL "AUDITLOG" USING "O" WS-AUDIT-PATH.
 
@@ -82,6 +91,13 @@
            ACCEPT WS-DATA-DIR FROM ENVIRONMENT "LEDGER_DATA"
            IF WS-DATA-DIR = SPACES
                MOVE "data" TO WS-DATA-DIR
+           END-IF.
+
+       GET-MODE.
+           MOVE SPACES TO WS-CMDLINE
+           ACCEPT WS-CMDLINE FROM COMMAND-LINE
+           IF WS-CMDLINE (1:10) = "--interest"
+               SET RUN-INTEREST TO TRUE
            END-IF.
 
        GET-OUT-DIR.
@@ -223,6 +239,26 @@
            STRING "REJECT " WS-REJECT-CODE DELIMITED BY SIZE
                INTO WS-AUDIT-RESULT
            PERFORM WRITE-AUDIT.
+
+       POST-INTEREST.
+           PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
+               IF AT-TYPE (WS-IX) = "S"
+                   CALL "INTCALC" USING AT-BALANCE (WS-IX) WS-INTEREST
+                   IF WS-INTEREST > 0
+                       ADD WS-INTEREST TO AT-BALANCE (WS-IX)
+                       ADD WS-INTEREST TO ST-INTEREST-TOTAL
+                       ADD 1 TO ST-APPLIED
+                       PERFORM AUDIT-INTEREST
+                   END-IF
+               END-IF
+           END-PERFORM.
+
+       AUDIT-INTEREST.
+           MOVE WS-INTEREST TO WS-AMT-EDIT
+           MOVE SPACES TO WS-AUDIT-LINE
+           STRING WS-RUN-DATE " ------ I " AT-ID (WS-IX) " " WS-AMT-EDIT
+               " OK" DELIMITED BY SIZE INTO WS-AUDIT-LINE
+           CALL "AUDITLOG" USING "W" WS-AUDIT-LINE.
 
        WRITE-ACCOUNTS.
            OPEN OUTPUT NEWACCT-FILE

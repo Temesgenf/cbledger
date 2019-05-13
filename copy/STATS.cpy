@@ -3,3 +3,4 @@
            05  ST-READ          PIC 9(6).
            05  ST-REJECTED      PIC 9(6).
            05  ST-APPLIED       PIC 9(6).
+           05  ST-INTEREST-TOTAL PIC 9(9)V99.
