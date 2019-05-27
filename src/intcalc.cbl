@@ -20,7 +20,7 @@
                WHEN OTHER
                    MOVE 0.0150 TO WS-RATE
            END-EVALUATE
-           COMPUTE LK-INTEREST = LK-BALANCE * WS-RATE / 12
+           COMPUTE LK-INTEREST ROUNDED = LK-BALANCE * WS-RATE / 12
            GOBACK.
 
        END PROGRAM INTCALC.

@@ -8,7 +8,7 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE
 10000005  ELENA MORALES         CHECKING ACTIVE       14,500.00
 10000006  FATIMA AL-SAYED       SAVINGS  ACTIVE       45,000.00
 10000007  GEORGE OKAFOR         CHECKING ACTIVE            0.00
-10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE        1,060.00
+10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE        1,294.56
 10000009  IBRAHIM YUSUF         CHECKING FROZEN          640.00
 10000010  JOHNSON, MARK         CHECKING ACTIVE        5,400.10
 
@@ -19,7 +19,7 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE
 10000012  LIAM O'BRIEN          CHECKING CLOSED            0.00
 ---------------------------------------------------------------
 TOTAL CHECKING                                        23,808.10
-TOTAL SAVINGS                                         72,759.99
+TOTAL SAVINGS                                         72,994.55
 
 TRANSACTIONS READ                            21
 TRANSACTIONS APPLIED                          9
