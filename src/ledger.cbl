@@ -148,6 +148,7 @@
                        END-IF
                        ADD 1 TO AT-COUNT
                        MOVE ACCT-REC TO AT-ACCT (AT-COUNT)
+                       ADD ACCT-BALANCE TO ST-OPENING-TOTAL
                END-READ
            END-PERFORM
            CLOSE ACCOUNT-FILE.
@@ -217,8 +218,12 @@
            EVALUATE TRUE
                WHEN TRAN-DEPOSIT
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
+                   ADD TRAN-AMOUNT TO ST-DEPOSIT-TOTAL
                WHEN TRAN-WITHDRAW OR TRAN-FEE
                    PERFORM DEBIT-ACCOUNT
+                   IF WS-REJECT-CODE = SPACES
+                       ADD TRAN-AMOUNT TO ST-DEBIT-TOTAL
+                   END-IF
                WHEN TRAN-TRANSFER
                    PERFORM TRANSFER-FUNDS
            END-EVALUATE.

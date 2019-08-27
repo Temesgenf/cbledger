@@ -4,3 +4,7 @@
            05  ST-REJECTED      PIC 9(6).
            05  ST-APPLIED       PIC 9(6).
            05  ST-INTEREST-TOTAL PIC 9(9)V99.
+           05  ST-OPENING-TOTAL  PIC S9(11)V99.
+           05  ST-CLOSING-TOTAL  PIC S9(11)V99.
+           05  ST-DEPOSIT-TOTAL  PIC 9(11)V99.
+           05  ST-DEBIT-TOTAL    PIC 9(11)V99.
