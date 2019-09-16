@@ -57,6 +57,7 @@
        01  WS-MODE-SW           PIC X VALUE "T".
            88  RUN-INTEREST     VALUE "I".
        01  WS-INTEREST          PIC 9(9)V99.
+       01  WS-EXPECTED          PIC S9(11)V99.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -273,6 +274,7 @@
            CLOSE NEWACCT-FILE.
 
        FINISH.
+           PERFORM RECONCILE
            CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
            CALL "RPTWRT" USING ACCT-TABLE LEDGER-STATS WS-RPT-PATH
                WS-RUN-DATE
@@ -281,7 +283,7 @@
            DISPLAY "  TRANSACTIONS READ " ST-READ
            DISPLAY "  APPLIED           " ST-APPLIED
            DISPLAY "  REJECTED          " ST-REJECTED
-           IF ST-REJECTED > 0
+           IF ST-REJECTED > 0 AND RETURN-CODE = 0
                MOVE 4 TO RETURN-CODE
            END-IF.
 
@@ -305,5 +307,18 @@
                TRAN-ACCT " " WS-AMT-EDIT " " WS-AUDIT-RESULT
                DELIMITED BY SIZE INTO WS-AUDIT-LINE
            CALL "AUDITLOG" USING "W" WS-AUDIT-LINE.
+
+       RECONCILE.
+           MOVE 0 TO ST-CLOSING-TOTAL
+           PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
+               ADD AT-BALANCE (WS-IX) TO ST-CLOSING-TOTAL
+           END-PERFORM
+           COMPUTE WS-EXPECTED = ST-OPENING-TOTAL + ST-DEPOSIT-TOTAL
+               + ST-INTEREST-TOTAL - ST-DEBIT-TOTAL
+           IF WS-EXPECTED NOT = ST-CLOSING-TOTAL
+               DISPLAY "OUT OF BALANCE: EXPECTED " WS-EXPECTED
+                   " FOUND " ST-CLOSING-TOTAL
+               MOVE 8 TO RETURN-CODE
+           END-IF.
 
        END PROGRAM LEDGER.
