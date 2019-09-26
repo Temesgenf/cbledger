@@ -26,8 +26,17 @@ Credits one month of interest to every savings account instead of processing
 transactions. The annual rate depends on the balance: 0.50% under 1,000,
 1.00% under 10,000 and 1.50% above that.
 
-The return code is 0 for a clean run, 4 if any transaction was rejected and 12
-if the run could not complete.
+Return codes:
+
+| RC | Meaning                                              |
+|----|------------------------------------------------------|
+| 0  | clean run                                            |
+| 4  | at least one transaction was rejected                |
+| 8  | closing balances do not reconcile with the movements |
+| 12 | the run could not complete                           |
+
+Every run writes `rejects.dat`, `accounts.new`, `audit.log` and `ledger.rpt`
+to the output directory.
 
 ## Tests
 
