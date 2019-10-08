@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 - 2019-10-08
+
+- Account status (active, frozen, closed) with matching reject codes.
+- `--interest` run mode with tiered monthly interest on savings accounts.
+- Control totals: opening balance plus deposits and interest minus debits must
+  equal the closing balance, otherwise the run ends with RC 8.
+- Report shows status, interest posted and the control totals.
+
 ## 0.2.0 - 2019-02-15
 
 - Transfers between accounts (`T`) and monthly fees (`F`).
