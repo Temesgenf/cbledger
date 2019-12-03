@@ -142,7 +142,7 @@
                    AT END
                        SET WS-ACCT-EOF TO TRUE
                    NOT AT END
-                       IF AT-COUNT >= 500
+                       IF AT-COUNT >= 1000
                            DISPLAY "ACCOUNT TABLE FULL AT " AT-COUNT
                            MOVE 12 TO RETURN-CODE
                            STOP RUN
