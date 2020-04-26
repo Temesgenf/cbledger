@@ -1,0 +1,13 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cbl,cpy}]
+indent_style = space
+max_line_length = 72
+
+[Makefile]
+indent_style = tab
