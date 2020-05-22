@@ -11,5 +11,7 @@
                88  ACCT-ACTIVE   VALUE "A".
                88  ACCT-FROZEN   VALUE "F".
                88  ACCT-CLOSED   VALUE "C".
-           05  ACCT-BALANCE     PIC 9(9)V99.
+           05  ACCT-BALANCE     PIC S9(9)V99
+                                SIGN IS LEADING SEPARATE.
+           05  ACCT-OD-LIMIT    PIC 9(7)V99.
            05  ACCT-OPEN-DATE   PIC 9(8).

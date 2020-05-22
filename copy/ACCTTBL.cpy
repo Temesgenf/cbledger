@@ -11,5 +11,7 @@
                        88  AT-ACTIVE    VALUE "A".
                        88  AT-FROZEN    VALUE "F".
                        88  AT-CLOSED    VALUE "C".
-                   15  AT-BALANCE       PIC 9(9)V99.
+                   15  AT-BALANCE       PIC S9(9)V99
+                                        SIGN IS LEADING SEPARATE.
+                   15  AT-OD-LIMIT      PIC 9(7)V99.
                    15  AT-OPEN-DATE     PIC 9(8).

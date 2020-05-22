@@ -8,11 +8,14 @@
        WORKING-STORAGE SECTION.
        01  WS-RATE              PIC 9V9999.
        LINKAGE SECTION.
-       01  LK-BALANCE           PIC 9(9)V99.
+       01  LK-BALANCE           PIC S9(9)V99
+                                SIGN IS LEADING SEPARATE.
        01  LK-INTEREST          PIC 9(9)V99.
        PROCEDURE DIVISION USING LK-BALANCE LK-INTEREST.
        MAIN-LINE.
            EVALUATE TRUE
+               WHEN LK-BALANCE <= 0
+                   MOVE 0 TO WS-RATE
                WHEN LK-BALANCE < 1000
                    MOVE 0.0050 TO WS-RATE
                WHEN LK-BALANCE < 10000

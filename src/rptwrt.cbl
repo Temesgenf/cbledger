@@ -15,8 +15,8 @@
        WORKING-STORAGE SECTION.
        01  WS-PATH              PIC X(100).
        01  WS-IX                PIC 9(4) COMP.
-       01  WS-TOT-CHECKING      PIC 9(11)V99 VALUE 0.
-       01  WS-TOT-SAVINGS       PIC 9(11)V99 VALUE 0.
+       01  WS-TOT-CHECKING      PIC S9(11)V99 VALUE 0.
+       01  WS-TOT-SAVINGS       PIC S9(11)V99 VALUE 0.
        01  WS-LINE-COUNT        PIC 9(3) COMP VALUE 0.
        01  WS-PAGE-NO           PIC 9(3) COMP VALUE 0.
        01  WS-PAGE-SIZE         PIC 9(3) COMP VALUE 10.
@@ -41,10 +41,10 @@
            05  DL-TYPE          PIC X(8).
            05  FILLER           PIC X VALUE SPACE.
            05  DL-STATUS        PIC X(8).
-           05  DL-BALANCE       PIC ZZZ,ZZZ,ZZ9.99.
+           05  DL-BALANCE       PIC -ZZ,ZZZ,ZZ9.99.
        01  TOTAL-LINE.
            05  TL-LABEL         PIC X(49).
-           05  TL-AMOUNT        PIC ZZZ,ZZZ,ZZ9.99.
+           05  TL-AMOUNT        PIC -ZZ,ZZZ,ZZ9.99.
        01  STAT-LINE.
            05  SL-LABEL         PIC X(40).
            05  SL-VALUE         PIC ZZZ,ZZ9.
