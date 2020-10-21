@@ -58,6 +58,7 @@
            88  RUN-INTEREST     VALUE "I".
        01  WS-INTEREST          PIC 9(9)V99.
        01  WS-EXPECTED          PIC S9(11)V99.
+       01  WS-AVAILABLE         PIC S9(10)V99.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -230,7 +231,9 @@
            END-EVALUATE.
 
        DEBIT-ACCOUNT.
-           IF TRAN-AMOUNT > AT-BALANCE (WS-IX)
+           COMPUTE WS-AVAILABLE =
+               AT-BALANCE (WS-IX) + AT-OD-LIMIT (WS-IX)
+           IF TRAN-AMOUNT > WS-AVAILABLE
                MOVE RC-NO-FUNDS TO WS-REJECT-CODE
            ELSE
                SUBTRACT TRAN-AMOUNT FROM AT-BALANCE (WS-IX)
