@@ -21,9 +21,9 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE
 TOTAL CHECKING                                        23,408.10
 TOTAL SAVINGS                                         72,994.55
 
-TRANSACTIONS READ                            21
+TRANSACTIONS READ                            22
 TRANSACTIONS APPLIED                         10
-TRANSACTIONS REJECTED                        11
+TRANSACTIONS REJECTED                        12
 
 OPENING BALANCE TOTAL                                 92,970.40
 CLOSING BALANCE TOTAL                                 96,402.65
