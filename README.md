@@ -38,6 +38,12 @@ Return codes:
 Every run writes `rejects.dat`, `accounts.new`, `audit.log` and `ledger.rpt`
 to the output directory.
 
+## Overdrafts
+
+A withdrawal or fee is refused (reason 02) when it is larger than the balance
+plus the account's overdraft limit. Balances are signed, so an overdrawn
+account shows a negative balance on the report.
+
 ## Tests
 
     make test

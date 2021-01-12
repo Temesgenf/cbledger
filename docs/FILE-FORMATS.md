@@ -14,8 +14,9 @@ One line per account, ascending by account id. Layout is in `copy/ACCTREC.cpy`.
 | 9-28  | name         | left justified                   |
 | 29    | type         | `C` checking, `S` savings        |
 | 30    | status       | `A` active, `F` frozen, `C` closed |
-| 31-41 | balance      | 9(9)V99                          |
-| 42-49 | open date    | YYYYMMDD                         |
+| 31-42 | balance      | sign (`+`/`-`) then 9(9)V99      |
+| 43-51 | overdraft    | 9(7)V99, zeros for no overdraft  |
+| 52-59 | open date    | YYYYMMDD                         |
 
 ## trans.dat
 
