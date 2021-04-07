@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0 - 2021-04-07
+
+- Balances are signed and accounts carry an overdraft limit.
+  **The account master layout changed**, see `docs/FILE-FORMATS.md`.
+- `make run`, GitHub Actions build and an `.editorconfig`.
+- Account table raised from 500 to 1000 entries.
+
 ## 1.0.0 - 2019-10-08
 
 - Account status (active, frozen, closed) with matching reject codes.
