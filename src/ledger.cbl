@@ -59,6 +59,7 @@
        01  WS-INTEREST          PIC 9(9)V99.
        01  WS-EXPECTED          PIC S9(11)V99.
        01  WS-AVAILABLE         PIC S9(10)V99.
+       01  WS-CSV-PATH          PIC X(100).
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -134,7 +135,10 @@
                DELIMITED BY SIZE INTO WS-AUDIT-PATH
            MOVE SPACES TO WS-RPT-PATH
            STRING FUNCTION TRIM(WS-OUT-DIR) "/ledger.rpt"
-               DELIMITED BY SIZE INTO WS-RPT-PATH.
+               DELIMITED BY SIZE INTO WS-RPT-PATH
+           MOVE SPACES TO WS-CSV-PATH
+           STRING FUNCTION TRIM(WS-OUT-DIR) "/accounts.csv"
+               DELIMITED BY SIZE INTO WS-CSV-PATH.
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
@@ -281,6 +285,7 @@
            CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
            CALL "RPTWRT" USING ACCT-TABLE LEDGER-STATS WS-RPT-PATH
                WS-RUN-DATE
+           CALL "CSVEXP" USING ACCT-TABLE WS-CSV-PATH
            DISPLAY "LEDGER RUN COMPLETE"
            DISPLAY "  ACCOUNTS LOADED   " AT-COUNT
            DISPLAY "  TRANSACTIONS READ " ST-READ
