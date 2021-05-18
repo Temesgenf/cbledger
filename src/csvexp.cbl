@@ -16,6 +16,8 @@
        01  WS-PATH              PIC X(100).
        01  WS-IX                PIC 9(4) COMP.
        01  WS-LINE              PIC X(120).
+       01  WS-NAME-OUT          PIC X(24).
+       01  WS-COMMAS            PIC 9(2) COMP.
        01  WS-BAL-EDIT          PIC -(9)9.99.
        01  WS-OD-EDIT           PIC Z(6)9.99.
        LINKAGE SECTION.
@@ -36,8 +38,17 @@
        BUILD-ROW.
            MOVE AT-BALANCE (WS-IX) TO WS-BAL-EDIT
            MOVE AT-OD-LIMIT (WS-IX) TO WS-OD-EDIT
+           MOVE 0 TO WS-COMMAS
+           INSPECT AT-NAME (WS-IX) TALLYING WS-COMMAS FOR ALL ","
+           MOVE SPACES TO WS-NAME-OUT
+           IF WS-COMMAS > 0
+               STRING QUOTE FUNCTION TRIM(AT-NAME (WS-IX)) QUOTE
+                   DELIMITED BY SIZE INTO WS-NAME-OUT
+           ELSE
+               MOVE FUNCTION TRIM(AT-NAME (WS-IX)) TO WS-NAME-OUT
+           END-IF
            MOVE SPACES TO WS-LINE
-           STRING AT-ID (WS-IX) "," FUNCTION TRIM(AT-NAME (WS-IX)) ","
+           STRING AT-ID (WS-IX) "," FUNCTION TRIM(WS-NAME-OUT) ","
                AT-TYPE (WS-IX) "," AT-STATUS (WS-IX) ","
                FUNCTION TRIM(WS-BAL-EDIT) "," FUNCTION TRIM(WS-OD-EDIT)
                DELIMITED BY SIZE INTO WS-LINE
