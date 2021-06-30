@@ -54,3 +54,8 @@ The rejected transaction followed by a two character reason code
 
 One line per transaction: date, sequence, type, account, amount and either
 `OK` or `REJECT nn`.
+
+## accounts.csv
+
+The final account table for spreadsheets, with a header row. Names that
+contain a comma are wrapped in double quotes. Balances use a decimal point.
