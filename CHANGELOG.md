@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 - 2021-07-06
+
+- `accounts.csv` is written next to the other outputs.
+
 ## 1.1.0 - 2021-04-07
 
 - Balances are signed and accounts carry an overdraft limit.
