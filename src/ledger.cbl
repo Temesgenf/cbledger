@@ -216,6 +216,8 @@
                    MOVE RC-FROZEN TO WS-REJECT-CODE
                WHEN AT-CLOSED (WS-IX)
                    MOVE RC-CLOSED TO WS-REJECT-CODE
+               WHEN TRAN-WITHDRAW AND TRAN-AMOUNT > 10000
+                   MOVE RC-OVER-LIMIT TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.
