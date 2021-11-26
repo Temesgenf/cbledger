@@ -60,6 +60,7 @@
        01  WS-EXPECTED          PIC S9(11)V99.
        01  WS-AVAILABLE         PIC S9(10)V99.
        01  WS-CSV-PATH          PIC X(100).
+       01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -216,7 +217,7 @@
                    MOVE RC-FROZEN TO WS-REJECT-CODE
                WHEN AT-CLOSED (WS-IX)
                    MOVE RC-CLOSED TO WS-REJECT-CODE
-               WHEN TRAN-WITHDRAW AND TRAN-AMOUNT > 10000
+               WHEN TRAN-WITHDRAW AND TRAN-AMOUNT > WS-WITHDRAW-LIMIT
                    MOVE RC-OVER-LIMIT TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
