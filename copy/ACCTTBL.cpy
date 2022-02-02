@@ -15,3 +15,4 @@
                                         SIGN IS LEADING SEPARATE.
                    15  AT-OD-LIMIT      PIC 9(7)V99.
                    15  AT-OPEN-DATE     PIC 9(8).
+               10  AT-TXN-COUNT     PIC 9(4) COMP.

@@ -182,6 +182,7 @@
            END-IF
            IF WS-REJECT-CODE = SPACES
                ADD 1 TO ST-APPLIED
+               ADD 1 TO AT-TXN-COUNT (WS-IX)
                MOVE "OK" TO WS-AUDIT-RESULT
                PERFORM WRITE-AUDIT
            ELSE

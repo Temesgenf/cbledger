@@ -32,7 +32,8 @@
            05  FILLER           PIC X(9)  VALUE "TYPE".
            05  FILLER           PIC X(8)  VALUE "STATUS".
            05  FILLER           PIC X(14) VALUE "       BALANCE".
-       01  RULE-LINE            PIC X(63) VALUE ALL "-".
+           05  FILLER           PIC X(6)  VALUE "  TXNS".
+       01  RULE-LINE            PIC X(69) VALUE ALL "-".
        01  DETAIL-LINE.
            05  DL-ID            PIC 9(8).
            05  FILLER           PIC XX VALUE SPACES.
@@ -42,6 +43,8 @@
            05  FILLER           PIC X VALUE SPACE.
            05  DL-STATUS        PIC X(8).
            05  DL-BALANCE       PIC -ZZ,ZZZ,ZZ9.99.
+           05  FILLER           PIC XX VALUE SPACES.
+           05  DL-TXNS          PIC ZZZ9.
        01  TOTAL-LINE.
            05  TL-LABEL         PIC X(49).
            05  TL-AMOUNT        PIC -ZZ,ZZZ,ZZ9.99.
@@ -102,6 +105,7 @@
                    MOVE "ACTIVE" TO DL-STATUS
            END-EVALUATE
            MOVE AT-BALANCE (WS-IX) TO DL-BALANCE
+           MOVE AT-TXN-COUNT (WS-IX) TO DL-TXNS
            WRITE REPORT-REC FROM DETAIL-LINE
            ADD 1 TO WS-LINE-COUNT.
 
