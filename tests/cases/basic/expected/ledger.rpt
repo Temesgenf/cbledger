@@ -3,7 +3,7 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
 ---------------------------------------------------------------------
 10000001  ALICE ADEBAYO         CHECKING ACTIVE        2,447.50     3
 10000002  BEKELE TESFAYE        SAVINGS  ACTIVE       16,000.00     1
-10000003  CHEN WEI              CHECKING ACTIVE          420.50     1
+10000003  CHEN WEI              CHECKING ACTIVE          420.50     2
 10000004  DAWIT HAILE           SAVINGS  ACTIVE          700.00     1
 10000005  ELENA MORALES         CHECKING ACTIVE       14,500.00     2
 10000006  FATIMA AL-SAYED       SAVINGS  ACTIVE       45,000.00     0

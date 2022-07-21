@@ -309,6 +309,7 @@
                PERFORM DEBIT-ACCOUNT
                IF WS-REJECT-CODE = SPACES
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
+                   ADD 1 TO AT-TXN-COUNT (WS-TX)
                END-IF
            END-IF.
 
