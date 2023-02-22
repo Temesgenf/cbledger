@@ -303,15 +303,18 @@
            MOVE TRAN-TARGET TO WS-FIND-ID
            PERFORM FIND-ACCOUNT
            MOVE WS-FOUND-IX TO WS-TX
-           IF WS-TX = 0
-               MOVE RC-NO-TARGET TO WS-REJECT-CODE
-           ELSE
-               PERFORM DEBIT-ACCOUNT
-               IF WS-REJECT-CODE = SPACES
-                   ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
-                   ADD 1 TO AT-TXN-COUNT (WS-TX)
-               END-IF
-           END-IF.
+           EVALUATE TRUE
+               WHEN WS-TX = 0
+                   MOVE RC-NO-TARGET TO WS-REJECT-CODE
+               WHEN AT-FROZEN (WS-TX)
+                   MOVE RC-FROZEN TO WS-REJECT-CODE
+               WHEN OTHER
+                   PERFORM DEBIT-ACCOUNT
+                   IF WS-REJECT-CODE = SPACES
+                       ADD TRAN-AMOUNT TO AT-BALANCE (WS-TX)
+                       ADD 1 TO AT-TXN-COUNT (WS-TX)
+                   END-IF
+           END-EVALUATE.
 
        WRITE-AUDIT.
            MOVE TRAN-AMOUNT TO WS-AMT-EDIT
