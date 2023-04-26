@@ -308,6 +308,8 @@
                    MOVE RC-NO-TARGET TO WS-REJECT-CODE
                WHEN AT-FROZEN (WS-TX)
                    MOVE RC-FROZEN TO WS-REJECT-CODE
+               WHEN AT-CLOSED (WS-TX)
+                   MOVE RC-CLOSED TO WS-REJECT-CODE
                WHEN OTHER
                    PERFORM DEBIT-ACCOUNT
                    IF WS-REJECT-CODE = SPACES
