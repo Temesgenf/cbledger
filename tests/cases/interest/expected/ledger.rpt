@@ -15,16 +15,16 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   2
 ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
 ---------------------------------------------------------------------
-10000011  KAREN LINDQVIST       SAVINGS  ACTIVE       10,008.32     0
+10000011  KAREN LINDQVIST       SAVINGS  FROZEN        9,999.99     0
 10000012  LIAM O'BRIEN          CHECKING CLOSED            0.00     0
 ---------------------------------------------------------------------
 TOTAL CHECKING                                        20,935.85
-TOTAL SAVINGS                                         72,119.24
+TOTAL SAVINGS                                         72,110.91
 
 TRANSACTIONS READ                             0
-TRANSACTIONS APPLIED                          5
+TRANSACTIONS APPLIED                          4
 TRANSACTIONS REJECTED                         0
-INTEREST POSTED                                           84.69
+INTEREST POSTED                                           76.36
 
 OPENING BALANCE TOTAL                                 92,970.40
-CLOSING BALANCE TOTAL                                 93,055.09
+CLOSING BALANCE TOTAL                                 93,046.76

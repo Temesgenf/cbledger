@@ -259,7 +259,7 @@
 
        POST-INTEREST.
            PERFORM VARYING WS-IX FROM 1 BY 1 UNTIL WS-IX > AT-COUNT
-               IF AT-TYPE (WS-IX) = "S"
+               IF AT-TYPE (WS-IX) = "S" AND AT-ACTIVE (WS-IX)
                    CALL "INTCALC" USING AT-BALANCE (WS-IX) WS-INTEREST
                    IF WS-INTEREST > 0
                        ADD WS-INTEREST TO AT-BALANCE (WS-IX)
