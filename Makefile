@@ -1,6 +1,6 @@
 # cbledger - batch ledger in COBOL
 COBC     ?= cobc
-COBFLAGS ?= -x -I copy
+COBFLAGS ?= -x -Wall -I copy
 
 ifeq ($(OS),Windows_NT)
 EXE := .exe
