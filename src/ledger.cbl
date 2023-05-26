@@ -143,6 +143,13 @@
 
        LOAD-ACCOUNTS.
            OPEN INPUT ACCOUNT-FILE
+           IF WS-ACCT-STATUS NOT = "00"
+               DISPLAY "CANNOT OPEN ACCOUNT FILE "
+                   FUNCTION TRIM(WS-ACCT-PATH)
+                   " (STATUS " WS-ACCT-STATUS ")"
+               MOVE 12 TO RETURN-CODE
+               STOP RUN
+           END-IF
            PERFORM UNTIL WS-ACCT-EOF
                READ ACCOUNT-FILE
                    AT END

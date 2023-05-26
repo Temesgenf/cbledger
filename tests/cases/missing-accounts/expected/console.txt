@@ -1,0 +1,2 @@
+CANNOT OPEN ACCOUNT FILE tests/cases/missing-accounts/accounts.dat (STATUS 35)
+libcob: warning: implicit CLOSE of AUDIT-FILE ('out/test/missing-accounts/audit.log')
