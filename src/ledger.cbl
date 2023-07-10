@@ -169,6 +169,13 @@
 
        PROCESS-TRANSACTIONS.
            OPEN INPUT TRANS-FILE
+           IF WS-TRAN-STATUS NOT = "00"
+               DISPLAY "CANNOT OPEN TRANSACTION FILE "
+                   FUNCTION TRIM(WS-TRAN-PATH)
+                   " (STATUS " WS-TRAN-STATUS ")"
+               MOVE 12 TO RETURN-CODE
+               STOP RUN
+           END-IF
            OPEN OUTPUT REJECT-FILE
            PERFORM UNTIL WS-TRAN-EOF
                READ TRANS-FILE
