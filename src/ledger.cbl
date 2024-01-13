@@ -182,7 +182,9 @@
                    AT END
                        SET WS-TRAN-EOF TO TRUE
                    NOT AT END
-                       PERFORM APPLY-TRANSACTION
+                       IF TRAN-REC NOT = SPACES
+                           PERFORM APPLY-TRANSACTION
+                       END-IF
                END-READ
            END-PERFORM
            CLOSE TRANS-FILE REJECT-FILE.
