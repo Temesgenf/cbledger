@@ -61,6 +61,7 @@
        01  WS-AVAILABLE         PIC S9(10)V99.
        01  WS-CSV-PATH          PIC X(100).
        01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
+       01  WS-PREV-ID           PIC 9(8) VALUE 0.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -155,6 +156,13 @@
                    AT END
                        SET WS-ACCT-EOF TO TRUE
                    NOT AT END
+                       IF ACCT-ID <= WS-PREV-ID
+                           DISPLAY "ACCOUNT FILE OUT OF ORDER AT "
+                               ACCT-ID
+                           MOVE 12 TO RETURN-CODE
+                           STOP RUN
+                       END-IF
+                       MOVE ACCT-ID TO WS-PREV-ID
                        IF AT-COUNT >= 1000
                            DISPLAY "ACCOUNT TABLE FULL AT " AT-COUNT
                            MOVE 12 TO RETURN-CODE
