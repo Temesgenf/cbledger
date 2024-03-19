@@ -215,12 +215,12 @@
 
        FIND-ACCOUNT.
            MOVE 0 TO WS-FOUND-IX
-           PERFORM VARYING WS-JX FROM 1 BY 1
-                   UNTIL WS-JX > AT-COUNT OR WS-FOUND-IX > 0
-               IF AT-ID (WS-JX) = WS-FIND-ID
-                   MOVE WS-JX TO WS-FOUND-IX
-               END-IF
-           END-PERFORM.
+           SEARCH ALL AT-ENTRY
+               AT END
+                   CONTINUE
+               WHEN AT-ID (AX) = WS-FIND-ID
+                   SET WS-FOUND-IX TO AX
+           END-SEARCH.
 
        VALIDATE-TRANSACTION.
            MOVE TRAN-ACCT TO WS-FIND-ID

@@ -2,7 +2,8 @@
       * NO VALUE CLAUSES SO IT CAN ALSO BE USED IN A LINKAGE SECTION.
        01  ACCT-TABLE.
            05  AT-COUNT         PIC 9(4) COMP.
-           05  AT-ENTRY OCCURS 1000 TIMES.
+           05  AT-ENTRY OCCURS 1 TO 1000 TIMES DEPENDING ON AT-COUNT
+                   ASCENDING KEY IS AT-ID INDEXED BY AX.
                10  AT-ACCT.
                    15  AT-ID            PIC 9(8).
                    15  AT-NAME          PIC X(20).
