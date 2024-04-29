@@ -41,7 +41,6 @@
        01  WS-REJECT-CODE       PIC XX.
        01  WS-ACCT-STATUS       PIC XX.
        01  WS-TRAN-STATUS       PIC XX.
-       01  WS-JX                PIC 9(4) COMP.
        01  WS-FIND-ID           PIC 9(8).
        01  WS-FOUND-IX          PIC 9(4) COMP.
        01  WS-TX                PIC 9(4) COMP.
