@@ -1,2 +1,1 @@
 CANNOT OPEN TRANSACTION FILE tests/cases/missing-trans/trans.dat (STATUS 35)
-libcob: warning: implicit CLOSE of AUDIT-FILE ('out/test/missing-trans/audit.log')

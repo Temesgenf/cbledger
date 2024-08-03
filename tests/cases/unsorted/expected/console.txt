@@ -1,3 +1,1 @@
 ACCOUNT FILE OUT OF ORDER AT 10000001
-libcob: warning: implicit CLOSE of ACCOUNT-FILE ('tests/cases/unsorted/accounts.dat')
-libcob: warning: implicit CLOSE of AUDIT-FILE ('out/test/unsorted/audit.log')

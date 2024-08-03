@@ -147,8 +147,7 @@
                DISPLAY "CANNOT OPEN ACCOUNT FILE "
                    FUNCTION TRIM(WS-ACCT-PATH)
                    " (STATUS " WS-ACCT-STATUS ")"
-               MOVE 12 TO RETURN-CODE
-               STOP RUN
+               PERFORM ABORT-RUN
            END-IF
            PERFORM UNTIL WS-ACCT-EOF
                READ ACCOUNT-FILE
@@ -158,14 +157,12 @@
                        IF ACCT-ID <= WS-PREV-ID
                            DISPLAY "ACCOUNT FILE OUT OF ORDER AT "
                                ACCT-ID
-                           MOVE 12 TO RETURN-CODE
-                           STOP RUN
+                           PERFORM ABORT-RUN
                        END-IF
                        MOVE ACCT-ID TO WS-PREV-ID
                        IF AT-COUNT >= 1000
                            DISPLAY "ACCOUNT TABLE FULL AT " AT-COUNT
-                           MOVE 12 TO RETURN-CODE
-                           STOP RUN
+                           PERFORM ABORT-RUN
                        END-IF
                        ADD 1 TO AT-COUNT
                        MOVE ACCT-REC TO AT-ACCT (AT-COUNT)
@@ -180,8 +177,7 @@
                DISPLAY "CANNOT OPEN TRANSACTION FILE "
                    FUNCTION TRIM(WS-TRAN-PATH)
                    " (STATUS " WS-TRAN-STATUS ")"
-               MOVE 12 TO RETURN-CODE
-               STOP RUN
+               PERFORM ABORT-RUN
            END-IF
            OPEN OUTPUT REJECT-FILE
            PERFORM UNTIL WS-TRAN-EOF
@@ -361,5 +357,12 @@
                    " FOUND " ST-CLOSING-TOTAL
                MOVE 8 TO RETURN-CODE
            END-IF.
+
+       ABORT-RUN.
+           CLOSE ACCOUNT-FILE
+           CLOSE TRANS-FILE
+           CALL "AUDITLOG" USING "C" WS-AUDIT-LINE
+           MOVE 12 TO RETURN-CODE
+           STOP RUN.
 
        END PROGRAM LEDGER.
