@@ -6,7 +6,8 @@ is 125.50.
 
 ## accounts.dat
 
-One line per account, ascending by account id. Layout is in `copy/ACCTREC.cpy`.
+One line per account, strictly ascending by account id (the run stops
+with RC 12 otherwise, lookups are a binary search). Layout is in `copy/ACCTREC.cpy`.
 
 | Cols  | Field        | Notes                            |
 |-------|--------------|----------------------------------|

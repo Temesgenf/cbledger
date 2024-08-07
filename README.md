@@ -33,7 +33,7 @@ Return codes:
 | 0  | clean run                                            |
 | 4  | at least one transaction was rejected                |
 | 8  | closing balances do not reconcile with the movements |
-| 12 | the run could not complete                           |
+| 12 | a file is missing or the master is unsorted          |
 
 Every run writes `rejects.dat`, `accounts.new`, `audit.log` and `ledger.rpt`
 to the output directory.
