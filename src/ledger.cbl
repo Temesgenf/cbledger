@@ -61,6 +61,7 @@
        01  WS-CSV-PATH          PIC X(100).
        01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
        01  WS-PREV-ID           PIC 9(8) VALUE 0.
+       01  WS-REASON-IX         PIC 99.
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".
@@ -268,6 +269,8 @@
 
        REJECT-TRANSACTION.
            ADD 1 TO ST-REJECTED
+           MOVE WS-REJECT-CODE TO WS-REASON-IX
+           ADD 1 TO ST-REASON-COUNT (WS-REASON-IX)
            MOVE TRAN-REC TO REJ-TRAN
            MOVE WS-REJECT-CODE TO REJ-CODE
            WRITE REJECT-REC
