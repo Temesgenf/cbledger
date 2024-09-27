@@ -24,6 +24,16 @@ TOTAL SAVINGS                                         72,994.55
 TRANSACTIONS READ                            25
 TRANSACTIONS APPLIED                         10
 TRANSACTIONS REJECTED                        15
+  REJECTED 01 UNKNOWN ACCOUNT                 1
+  REJECTED 02 INSUFFICIENT FUNDS              2
+  REJECTED 03 ACCOUNT FROZEN                  2
+  REJECTED 04 ACCOUNT CLOSED                  2
+  REJECTED 05 UNKNOWN TRANSACTION TYPE        1
+  REJECTED 06 INVALID DATE                    3
+  REJECTED 07 ZERO AMOUNT                     1
+  REJECTED 08 TRANSFER TO SAME ACCOUNT        1
+  REJECTED 09 UNKNOWN TRANSFER TARGET         1
+  REJECTED 10 OVER WITHDRAWAL LIMIT           1
 
 OPENING BALANCE TOTAL                                 92,970.40
 CLOSING BALANCE TOTAL                                 96,402.65
