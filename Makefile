@@ -11,7 +11,7 @@ MAIN := src/ledger.cbl
 SUBS := $(filter-out $(MAIN),$(wildcard src/*.cbl))
 CPYS := $(wildcard copy/*.cpy)
 
-.PHONY: all clean test run
+.PHONY: all clean test run check demo
 
 all: $(BIN)
 
@@ -23,6 +23,13 @@ bin out:
 
 run: $(BIN) | out
 	$(BIN)
+
+check:
+	sh tools/check-columns.sh
+
+demo: $(BIN) | out
+	$(BIN) || true
+	cat out/ledger.rpt
 
 test: $(BIN)
 	sh tests/run_tests.sh
