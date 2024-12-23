@@ -46,6 +46,8 @@ account shows a negative balance on the report.
 
 ## Tests
 
-    make test
+    make test    # regression cases in tests/cases
+    make check   # 72 column limit
+    make demo    # run on data/ and print the report
 
 See `docs/FILE-FORMATS.md` for the record layouts.
