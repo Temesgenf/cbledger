@@ -6,3 +6,5 @@ out/
 *.c
 *.c.h
 *.c.l.h
+.vscode/
+.idea/
