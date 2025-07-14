@@ -44,6 +44,21 @@ A withdrawal or fee is refused (reason 02) when it is larger than the balance
 plus the account's overdraft limit. Balances are signed, so an overdrawn
 account shows a negative balance on the report.
 
+## Docker
+
+    docker build -t cbledger .
+    docker run --rm -v "$PWD/data:/app/data" -v "$PWD/out:/app/out" cbledger
+
+## Layout
+
+| Path            | Contents                                   |
+|-----------------|--------------------------------------------|
+| `src/`          | the main program and its subprograms       |
+| `copy/`         | record layouts and shared tables           |
+| `data/`         | sample master and transactions             |
+| `tests/cases/`  | regression cases with their expected output |
+| `tools/`        | helper scripts                             |
+
 ## Tests
 
     make test    # regression cases in tests/cases
