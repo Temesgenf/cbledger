@@ -29,6 +29,9 @@ for dir in tests/cases/*/; do
     LEDGER_DATA="$dir" LEDGER_OUT="$out" LEDGER_RUN_DATE=20180831 \
         "./$BIN" $args > "$out/console.txt" 2>&1
     echo $? > "$out/rc.txt"
+    for f in "$out"/*; do
+        tr -d '\r' < "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+    done
     if [ "$1" = "--update" ]; then
         rm -rf "$dir/expected"
         mkdir "$dir/expected"
