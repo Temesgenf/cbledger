@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0 - 2026-02-20
+
+- Clear error and RC 12 when the account or transaction file is missing, or
+  when the master is not in ascending order.
+- Blank lines in the transaction file are ignored.
+- Transfers into frozen or closed accounts are rejected.
+- Interest is no longer credited to frozen or closed accounts.
+- Account lookup is a binary search (`SEARCH ALL`).
+- The report lists rejects by reason.
+- `make check`, a Dockerfile and `docs/DESIGN.md`.
+
 ## 1.2.0 - 2021-07-06
 
 - `accounts.csv` is written next to the other outputs.
