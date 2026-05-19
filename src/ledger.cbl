@@ -52,6 +52,7 @@
        01  WS-AMT-EDIT          PIC Z(8)9.99.
        01  WS-RPT-PATH          PIC X(100).
        01  WS-RUN-DATE          PIC X(8).
+       01  WS-RUN-DATE-N REDEFINES WS-RUN-DATE PIC 9(8).
        01  WS-CMDLINE           PIC X(40).
        01  WS-MODE-SW           PIC X VALUE "T".
            88  RUN-INTEREST     VALUE "I".
@@ -245,6 +246,8 @@
                    MOVE RC-CLOSED TO WS-REJECT-CODE
                WHEN TRAN-WITHDRAW AND TRAN-AMOUNT > WS-WITHDRAW-LIMIT
                    MOVE RC-OVER-LIMIT TO WS-REJECT-CODE
+               WHEN TRAN-DATE > WS-RUN-DATE-N
+                   MOVE RC-FUTURE-DATE TO WS-REJECT-CODE
                WHEN OTHER
                    CONTINUE
            END-EVALUATE.

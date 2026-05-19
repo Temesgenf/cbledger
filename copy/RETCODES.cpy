@@ -10,3 +10,4 @@
            05  RC-FROZEN        PIC XX VALUE "03".
            05  RC-CLOSED        PIC XX VALUE "04".
            05  RC-OVER-LIMIT    PIC XX VALUE "10".
+           05  RC-FUTURE-DATE   PIC XX VALUE "11".
