@@ -50,6 +50,8 @@ The rejected transaction followed by a two character reason code
 | 07   | zero amount                     |
 | 08   | transfer to the same account    |
 | 09   | transfer target does not exist  |
+| 10   | withdrawal over 10,000.00       |
+| 11   | dated after the run date        |
 
 ## audit.log
 
