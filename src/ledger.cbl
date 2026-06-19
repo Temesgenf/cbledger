@@ -63,7 +63,7 @@
        01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
        01  WS-PREV-ID           PIC 9(8) VALUE 0.
        01  WS-REASON-IX         PIC 99.
-       01  WS-VERSION           PIC X(8) VALUE "1.3.0".
+       01  WS-VERSION           PIC X(8) VALUE "1.4.0".
        01  WS-IX                PIC 9(4) COMP.
        01  WS-SWITCHES.
            05  WS-ACCT-EOF-SW   PIC X VALUE "N".

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 - 2026-06-19
+
+- `--version`.
+- Transactions dated after the run date are rejected (reason 11).
+
 ## 1.3.0 - 2026-02-20
 
 - Clear error and RC 12 when the account or transaction file is missing, or
