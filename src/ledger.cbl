@@ -256,7 +256,11 @@
            EVALUATE TRUE
                WHEN TRAN-DEPOSIT
                    ADD TRAN-AMOUNT TO AT-BALANCE (WS-IX)
-                   ADD TRAN-AMOUNT TO ST-DEPOSIT-TOTAL
+                       ON SIZE ERROR
+                           MOVE RC-OVERFLOW TO WS-REJECT-CODE
+                       NOT ON SIZE ERROR
+                           ADD TRAN-AMOUNT TO ST-DEPOSIT-TOTAL
+                   END-ADD
                WHEN TRAN-WITHDRAW OR TRAN-FEE
                    PERFORM DEBIT-ACCOUNT
                    IF WS-REJECT-CODE = SPACES

@@ -10,7 +10,7 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
 10000007  GEORGE OKAFOR         CHECKING ACTIVE            0.00     1
 10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE        1,294.56     1
 10000009  IBRAHIM YUSUF         CHECKING FROZEN          640.00     0
-10000010  JOHNSON, MARK         CHECKING ACTIVE        5,400.10     0
+10000010  JOHNSON, MARK         CHECKING ACTIVE   99,995,400.10     1
 
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   2
 ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
@@ -18,12 +18,12 @@ ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
 10000011  KAREN LINDQVIST       SAVINGS  FROZEN        9,999.99     0
 10000012  LIAM O'BRIEN          CHECKING CLOSED            0.00     0
 ---------------------------------------------------------------------
-TOTAL CHECKING                                        23,408.10
+TOTAL CHECKING                                        13,408.10
 TOTAL SAVINGS                                         72,994.55
 
-TRANSACTIONS READ                            26
-TRANSACTIONS APPLIED                         10
-TRANSACTIONS REJECTED                        16
+TRANSACTIONS READ                            28
+TRANSACTIONS APPLIED                         11
+TRANSACTIONS REJECTED                        17
   REJECTED 01 UNKNOWN ACCOUNT                 1
   REJECTED 02 INSUFFICIENT FUNDS              2
   REJECTED 03 ACCOUNT FROZEN                  2
@@ -35,6 +35,7 @@ TRANSACTIONS REJECTED                        16
   REJECTED 09 UNKNOWN TRANSFER TARGET         1
   REJECTED 10 OVER WITHDRAWAL LIMIT           1
   REJECTED 11 DATED AFTER THE RUN DATE        1
+  REJECTED 12 BALANCE WOULD OVERFLOW          1
 
 OPENING BALANCE TOTAL                                 92,970.40
-CLOSING BALANCE TOTAL                                 96,402.65
+CLOSING BALANCE TOTAL                                 86,402.65
