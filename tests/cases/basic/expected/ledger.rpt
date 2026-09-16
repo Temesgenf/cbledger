@@ -1,24 +1,24 @@
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   1
-ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
----------------------------------------------------------------------
-10000001  ALICE ADEBAYO         CHECKING ACTIVE        2,447.50     3
-10000002  BEKELE TESFAYE        SAVINGS  ACTIVE       16,000.00     1
-10000003  CHEN WEI              CHECKING ACTIVE          420.50     2
-10000004  DAWIT HAILE           SAVINGS  ACTIVE          700.00     1
-10000005  ELENA MORALES         CHECKING ACTIVE       14,500.00     2
-10000006  FATIMA AL-SAYED       SAVINGS  ACTIVE       45,000.00     0
-10000007  GEORGE OKAFOR         CHECKING ACTIVE            0.00     1
-10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE        1,294.56     1
-10000009  IBRAHIM YUSUF         CHECKING FROZEN          640.00     0
-10000010  JOHNSON, MARK         CHECKING ACTIVE   99,995,400.10     1
+ACCT ID   NAME                  TYPE     STATUS          BALANCE  TXNS
+----------------------------------------------------------------------
+10000001  ALICE ADEBAYO         CHECKING ACTIVE         2,447.50     3
+10000002  BEKELE TESFAYE        SAVINGS  ACTIVE        16,000.00     1
+10000003  CHEN WEI              CHECKING ACTIVE           420.50     2
+10000004  DAWIT HAILE           SAVINGS  ACTIVE           700.00     1
+10000005  ELENA MORALES         CHECKING ACTIVE        14,500.00     2
+10000006  FATIMA AL-SAYED       SAVINGS  ACTIVE        45,000.00     0
+10000007  GEORGE OKAFOR         CHECKING ACTIVE             0.00     1
+10000008  HANNAH SCHMIDT        SAVINGS  ACTIVE         1,294.56     1
+10000009  IBRAHIM YUSUF         CHECKING FROZEN           640.00     0
+10000010  JOHNSON, MARK         CHECKING ACTIVE   999,995,400.10     1
 
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   2
-ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
----------------------------------------------------------------------
-10000011  KAREN LINDQVIST       SAVINGS  FROZEN        9,999.99     0
-10000012  LIAM O'BRIEN          CHECKING CLOSED            0.00     0
----------------------------------------------------------------------
-TOTAL CHECKING                                        13,408.10
+ACCT ID   NAME                  TYPE     STATUS          BALANCE  TXNS
+----------------------------------------------------------------------
+10000011  KAREN LINDQVIST       SAVINGS  FROZEN         9,999.99     0
+10000012  LIAM O'BRIEN          CHECKING CLOSED             0.00     0
+----------------------------------------------------------------------
+TOTAL CHECKING                                 1,000,013,408.10
 TOTAL SAVINGS                                         72,994.55
 
 TRANSACTIONS READ                            28
@@ -38,4 +38,4 @@ TRANSACTIONS REJECTED                        17
   REJECTED 12 BALANCE WOULD OVERFLOW          1
 
 OPENING BALANCE TOTAL                                 92,970.40
-CLOSING BALANCE TOTAL                                 86,402.65
+CLOSING BALANCE TOTAL                          1,000,086,402.65

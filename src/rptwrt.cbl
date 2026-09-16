@@ -31,9 +31,9 @@
            05  FILLER           PIC X(22) VALUE "NAME".
            05  FILLER           PIC X(9)  VALUE "TYPE".
            05  FILLER           PIC X(8)  VALUE "STATUS".
-           05  FILLER           PIC X(14) VALUE "       BALANCE".
+           05  FILLER           PIC X(15) VALUE "        BALANCE".
            05  FILLER           PIC X(6)  VALUE "  TXNS".
-       01  RULE-LINE            PIC X(69) VALUE ALL "-".
+       01  RULE-LINE            PIC X(70) VALUE ALL "-".
        01  DETAIL-LINE.
            05  DL-ID            PIC 9(8).
            05  FILLER           PIC XX VALUE SPACES.
@@ -42,12 +42,12 @@
            05  DL-TYPE          PIC X(8).
            05  FILLER           PIC X VALUE SPACE.
            05  DL-STATUS        PIC X(8).
-           05  DL-BALANCE       PIC -ZZ,ZZZ,ZZ9.99.
+           05  DL-BALANCE       PIC -ZZZ,ZZZ,ZZ9.99.
            05  FILLER           PIC XX VALUE SPACES.
            05  DL-TXNS          PIC ZZZ9.
        01  TOTAL-LINE.
-           05  TL-LABEL         PIC X(49).
-           05  TL-AMOUNT        PIC -ZZ,ZZZ,ZZ9.99.
+           05  TL-LABEL         PIC X(45).
+           05  TL-AMOUNT        PIC -ZZ,ZZZ,ZZZ,ZZ9.99.
        01  STAT-LINE.
            05  SL-LABEL         PIC X(40).
            05  SL-VALUE         PIC ZZZ,ZZ9.

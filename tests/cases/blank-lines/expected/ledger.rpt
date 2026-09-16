@@ -1,10 +1,10 @@
 CBLEDGER ACCOUNT LIST     RUN DATE 2018-08-31 PAGE   1
-ACCT ID   NAME                  TYPE     STATUS         BALANCE  TXNS
----------------------------------------------------------------------
-10000001  ALICE ADEBAYO         CHECKING ACTIVE        2,510.00     1
-10000002  BEKELE TESFAYE        SAVINGS  ACTIVE       15,020.00     1
-10000003  CHEN WEI              CHECKING ACTIVE          320.50     0
----------------------------------------------------------------------
+ACCT ID   NAME                  TYPE     STATUS          BALANCE  TXNS
+----------------------------------------------------------------------
+10000001  ALICE ADEBAYO         CHECKING ACTIVE         2,510.00     1
+10000002  BEKELE TESFAYE        SAVINGS  ACTIVE        15,020.00     1
+10000003  CHEN WEI              CHECKING ACTIVE           320.50     0
+----------------------------------------------------------------------
 TOTAL CHECKING                                         2,830.50
 TOTAL SAVINGS                                         15,020.00
 
