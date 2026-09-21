@@ -61,6 +61,7 @@
        01  WS-AVAILABLE         PIC S9(10)V99.
        01  WS-CSV-PATH          PIC X(100).
        01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
+       01  WS-MAX-BALANCE       PIC 9(9)V99 VALUE 999999999.99.
        01  WS-PREV-ID           PIC 9(8) VALUE 0.
        01  WS-REASON-IX         PIC 99.
        01  WS-VERSION           PIC X(8) VALUE "1.4.0".
@@ -344,6 +345,9 @@
                    MOVE RC-FROZEN TO WS-REJECT-CODE
                WHEN AT-CLOSED (WS-TX)
                    MOVE RC-CLOSED TO WS-REJECT-CODE
+               WHEN AT-BALANCE (WS-TX) + TRAN-AMOUNT
+                       > WS-MAX-BALANCE
+                   MOVE RC-TARGET-FULL TO WS-REJECT-CODE
                WHEN OTHER
                    PERFORM DEBIT-ACCOUNT
                    IF WS-REJECT-CODE = SPACES
