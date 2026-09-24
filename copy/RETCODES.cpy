@@ -13,3 +13,4 @@
            05  RC-FUTURE-DATE   PIC XX VALUE "11".
            05  RC-OVERFLOW      PIC XX VALUE "12".
            05  RC-TARGET-FULL   PIC XX VALUE "13".
+           05  RC-BEFORE-OPEN   PIC XX VALUE "14".

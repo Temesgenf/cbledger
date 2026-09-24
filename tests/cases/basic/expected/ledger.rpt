@@ -21,9 +21,9 @@ ACCT ID   NAME                  TYPE     STATUS          BALANCE  TXNS
 TOTAL CHECKING                                 1,000,013,408.10
 TOTAL SAVINGS                                         72,994.55
 
-TRANSACTIONS READ                            29
+TRANSACTIONS READ                            30
 TRANSACTIONS APPLIED                         11
-TRANSACTIONS REJECTED                        18
+TRANSACTIONS REJECTED                        19
   REJECTED 01 UNKNOWN ACCOUNT                 1
   REJECTED 02 INSUFFICIENT FUNDS              2
   REJECTED 03 ACCOUNT FROZEN                  2
@@ -37,6 +37,7 @@ TRANSACTIONS REJECTED                        18
   REJECTED 11 DATED AFTER THE RUN DATE        1
   REJECTED 12 BALANCE WOULD OVERFLOW          1
   REJECTED 13 TARGET BALANCE OVERFLOW         1
+  REJECTED 14 BEFORE ACCOUNT OPENING          1
 
 OPENING BALANCE TOTAL                                 92,970.40
 CLOSING BALANCE TOTAL                          1,000,086,402.65
