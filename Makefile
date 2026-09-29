@@ -15,7 +15,7 @@ CPYS := $(wildcard copy/*.cpy)
 
 all: $(BIN)
 
-$(BIN): $(MAIN) $(SUBS) $(CPYS) | bin
+$(BIN): $(MAIN) $(SUBS) $(CPYS) $(MAKEFILE_LIST) | bin
 	$(COBC) $(COBFLAGS) -o $@ $(MAIN) $(SUBS)
 
 bin out:
