@@ -63,6 +63,7 @@
        01  WS-WITHDRAW-LIMIT    PIC 9(9)V99 VALUE 10000.00.
        01  WS-MAX-BALANCE       PIC 9(9)V99 VALUE 999999999.99.
        01  WS-PREV-ID           PIC 9(8) VALUE 0.
+       01  WS-LAST-SEQ          PIC 9(6) VALUE 0.
        01  WS-REASON-IX         PIC 99.
        01  WS-VERSION           PIC X(8) VALUE "1.4.0".
        01  WS-IX                PIC 9(4) COMP.
@@ -204,6 +205,9 @@
            ADD 1 TO ST-READ
            MOVE SPACES TO WS-REJECT-CODE
            PERFORM VALIDATE-TRANSACTION
+           IF TRAN-SEQ > WS-LAST-SEQ
+               MOVE TRAN-SEQ TO WS-LAST-SEQ
+           END-IF
            IF WS-REJECT-CODE = SPACES
                PERFORM POST-TRANSACTION
            END-IF
@@ -231,6 +235,8 @@
            MOVE WS-FOUND-IX TO WS-IX
            CALL "DATEUTIL" USING TRAN-DATE WS-DATE-OK
            EVALUATE TRUE
+               WHEN TRAN-SEQ <= WS-LAST-SEQ
+                   MOVE RC-BAD-SEQ TO WS-REJECT-CODE
                WHEN WS-IX = 0
                    MOVE RC-NO-ACCOUNT TO WS-REJECT-CODE
                WHEN TRAN-TRANSFER AND TRAN-TARGET = TRAN-ACCT
