@@ -91,6 +91,7 @@
            PERFORM GET-DIRECTORIES
            PERFORM GET-OUT-DIR
            PERFORM GET-RUN-DATE
+           PERFORM CHECK-RUN-DATE
            PERFORM GET-MODE
            PERFORM BUILD-PATHS
            CALL "AUDITLOG" USING "O" WS-AUDIT-PATH.
@@ -125,6 +126,18 @@
            ACCEPT WS-RUN-DATE FROM ENVIRONMENT "LEDGER_RUN_DATE"
            IF WS-RUN-DATE = SPACES
                MOVE FUNCTION CURRENT-DATE (1:8) TO WS-RUN-DATE
+           END-IF.
+
+       CHECK-RUN-DATE.
+           IF WS-RUN-DATE IS NOT NUMERIC
+               MOVE "N" TO WS-DATE-OK
+           ELSE
+               CALL "DATEUTIL" USING WS-RUN-DATE WS-DATE-OK
+           END-IF
+           IF NOT DATE-IS-VALID
+               DISPLAY "INVALID RUN DATE " WS-RUN-DATE
+               MOVE 12 TO RETURN-CODE
+               STOP RUN
            END-IF.
 
        BUILD-PATHS.

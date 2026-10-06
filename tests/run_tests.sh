@@ -26,7 +26,9 @@ for dir in tests/cases/*/; do
     mkdir -p "$out"
     args=
     if [ -f "$dir/args" ]; then args=$(cat "$dir/args"); fi
-    LEDGER_DATA="$dir" LEDGER_OUT="$out" LEDGER_RUN_DATE=20180831 \
+    run_date=20180831
+    if [ -f "$dir/run_date" ]; then run_date=$(cat "$dir/run_date"); fi
+    LEDGER_DATA="$dir" LEDGER_OUT="$out" LEDGER_RUN_DATE="$run_date" \
         "./$BIN" $args > "$out/console.txt" 2>&1
     echo $? > "$out/rc.txt"
     for f in "$out"/*; do
