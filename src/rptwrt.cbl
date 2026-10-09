@@ -17,6 +17,8 @@
        01  WS-IX                PIC 9(4) COMP.
        01  WS-TOT-CHECKING      PIC S9(11)V99 VALUE 0.
        01  WS-TOT-SAVINGS       PIC S9(11)V99 VALUE 0.
+       01  WS-N-FROZEN          PIC 9(4) COMP VALUE 0.
+       01  WS-N-CLOSED          PIC 9(4) COMP VALUE 0.
        01  WS-LINE-COUNT        PIC 9(3) COMP VALUE 0.
        01  WS-PAGE-NO           PIC 9(3) COMP VALUE 0.
        01  WS-PAGE-SIZE         PIC 9(3) COMP VALUE 10.
@@ -102,8 +104,10 @@
            EVALUATE TRUE
                WHEN AT-FROZEN (WS-IX)
                    MOVE "FROZEN" TO DL-STATUS
+                   ADD 1 TO WS-N-FROZEN
                WHEN AT-CLOSED (WS-IX)
                    MOVE "CLOSED" TO DL-STATUS
+                   ADD 1 TO WS-N-CLOSED
                WHEN OTHER
                    MOVE "ACTIVE" TO DL-STATUS
            END-EVALUATE
@@ -119,7 +123,13 @@
            WRITE REPORT-REC FROM TOTAL-LINE
            MOVE "TOTAL SAVINGS" TO TL-LABEL
            MOVE WS-TOT-SAVINGS TO TL-AMOUNT
-           WRITE REPORT-REC FROM TOTAL-LINE.
+           WRITE REPORT-REC FROM TOTAL-LINE
+           MOVE "FROZEN ACCOUNTS" TO SL-LABEL
+           MOVE WS-N-FROZEN TO SL-VALUE
+           WRITE REPORT-REC FROM STAT-LINE
+           MOVE "CLOSED ACCOUNTS" TO SL-LABEL
+           MOVE WS-N-CLOSED TO SL-VALUE
+           WRITE REPORT-REC FROM STAT-LINE.
 
        PRINT-STATS.
            MOVE SPACES TO REPORT-REC

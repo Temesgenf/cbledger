@@ -7,6 +7,8 @@ ACCT ID   NAME                  TYPE     STATUS          BALANCE  TXNS
 ----------------------------------------------------------------------
 TOTAL CHECKING                                         2,860.50
 TOTAL SAVINGS                                         15,020.00
+FROZEN ACCOUNTS                               0
+CLOSED ACCOUNTS                               0
 
 TRANSACTIONS READ                             5
 TRANSACTIONS APPLIED                          3
