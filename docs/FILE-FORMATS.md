@@ -52,6 +52,10 @@ The rejected transaction followed by a two character reason code
 | 09   | transfer target does not exist  |
 | 10   | withdrawal over 10,000.00       |
 | 11   | dated after the run date        |
+| 12   | deposit would overflow the balance |
+| 13   | transfer would overflow the target |
+| 14   | dated before the account opened |
+| 15   | sequence number repeated or not ascending |
 
 ## audit.log
 

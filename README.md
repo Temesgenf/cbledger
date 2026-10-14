@@ -18,6 +18,10 @@ Needs [GnuCOBOL](https://gnucobol.sourceforge.io/) 2.2 or later.
 By default the program reads `data/accounts.dat` and `data/trans.dat` and
 writes to `out/`. Set `LEDGER_DATA` and `LEDGER_OUT` to use other directories.
 
+`LEDGER_RUN_DATE` (YYYYMMDD) overrides today's date. It is used on the report,
+in the audit log, and to reject transactions dated after it. An invalid value
+stops the run with RC 12.
+
 ## Monthly interest
 
     bin/ledger --interest
