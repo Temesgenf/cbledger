@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0 - 2026-10-20
+
+- Deposits and transfers that would overflow a balance are rejected (reasons
+  12 and 13) instead of wrapping around.
+- Transactions dated before the account was opened are rejected (14).
+- Repeated or out-of-order sequence numbers are rejected (15).
+- An invalid `LEDGER_RUN_DATE` stops the run with RC 12.
+- The report no longer cuts off balances of 100 million and over, and shows
+  how many accounts are frozen or closed.
+- The program is rebuilt when the Makefile changes.
+
 ## 1.4.0 - 2026-06-19
 
 - `--version`.
